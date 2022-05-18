@@ -15,6 +15,7 @@
 import BoardHeader from "@/components/board/BoardHeader.vue";
 
 export default {
+  name: "BoardView",
   components: {
     BoardHeader,
   },
