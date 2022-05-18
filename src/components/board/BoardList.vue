@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col>
+      <v-col class="px-0">
         <v-data-table
           :headers="headers"
           :items="boardItems"
@@ -12,6 +12,7 @@
           @click:row="viewPost"
         >
         </v-data-table>
+        <br />
         <v-pagination v-model="page" :length="pageCount"></v-pagination>
       </v-col>
     </v-row>

@@ -31,42 +31,52 @@
       ></v-textarea>
     </v-row>
     <v-row>
-      <v-btn @click="movePage" color="blue-grey" class="white--text">
+      <v-btn
+        @click="movePage"
+        elevation="0"
+        color="disabled"
+        class="gray--text font-weight-bold"
+      >
         글 목록으로
       </v-btn>
       <v-spacer />
-      <v-btn
-        @click="replyPost"
-        color="blue"
-        class="white--text"
-        v-if="boardAction === 'detail'"
-      >
-        답글달기
-      </v-btn>
-      <v-btn
-        @click="moveUpdate"
-        color="yellow"
-        class="black--text"
-        v-if="boardAction === 'detail'"
-      >
-        수정하기
-      </v-btn>
-      <v-btn
-        @click="deletePost"
-        color="red"
-        class="white--text"
-        v-if="boardAction === 'update'"
-      >
-        삭제하기
-      </v-btn>
-      <v-btn
-        @click="updatePost"
-        color="blue"
-        class="white--text"
-        v-if="boardAction === 'update'"
-      >
-        저장하기
-      </v-btn>
+      <div v-if="boardAction == 'detail'">
+        <v-btn
+          @click="replyPost"
+          elevation="0"
+          color="green lighten-1"
+          class="white--text font-weight-bold mr-3"
+        >
+          답글달기
+        </v-btn>
+        <v-btn
+          @click="moveUpdate"
+          elevation="0"
+          color="primary"
+          class="white--text font-weight-bold"
+        >
+          수정하기
+        </v-btn>
+      </div>
+
+      <div v-else>
+        <v-btn
+          @click="deletePost"
+          elevation="0"
+          color="lightgray"
+          class="white--text font-weight-bold mr-3"
+        >
+          삭제하기
+        </v-btn>
+        <v-btn
+          @click="updatePost"
+          elevation="0"
+          color="primary"
+          class="white--text font-weight-bold"
+        >
+          저장하기
+        </v-btn>
+      </div>
     </v-row>
   </v-container>
 </template>

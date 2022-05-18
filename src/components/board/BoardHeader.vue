@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>자유 게시판</h1>
-  </div>
+  <div class="mb-5"></div>
 </template>
 
 <script>
