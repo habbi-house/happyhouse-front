@@ -23,8 +23,18 @@ const routes = [
     children: [
       {
         path: "boardlist",
-        name: "boardlist",
+        name: "BoardList",
         component: () => import("@/components/board/BoardList.vue"),
+      },
+      {
+        path: "add",
+        name: "boardAdd",
+        component: () => import("@/components/board/BoardAdd.vue"),
+      },
+      {
+        path: ":articleno",
+        name: "boardDetail",
+        component: () => import("@/components/board/BoardDetail.vue"),
       },
     ],
   },

@@ -10,7 +10,9 @@
       </v-col>
       <v-spacer></v-spacer>
       <v-col cols="1">
-        <v-btn color="orange" class="white--text"> 글 작성하기 </v-btn>
+        <v-btn color="orange" class="white--text" @click="moveWrite">
+          글 작성하기
+        </v-btn>
       </v-col>
     </v-row>
     <v-row>
@@ -22,6 +24,7 @@
           :items-per-page="5"
           hide-default-footer
           @page-count="pageCount = $event"
+          @click:row="viewPost"
         >
         </v-data-table>
         <v-pagination v-model="page" :length="pageCount"></v-pagination>
@@ -116,6 +119,17 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    moveWrite() {
+      this.$router.push({ name: "boardAdd" });
+    },
+    viewPost(post) {
+      this.$router.push({
+        name: "boardDetail",
+        params: { articleno: post.articleno },
+      });
+    },
   },
 };
 </script>
