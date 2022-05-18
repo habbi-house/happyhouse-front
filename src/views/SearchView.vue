@@ -1,18 +1,20 @@
 <template>
-  <v-container class="mx-0 px-0" fluid style="height: 100%">
-    <v-card>
-      <v-row class="px-5">
-        <v-col cols="6">
-          <search-input />
-        </v-col>
-      </v-row>
-      <v-divider class="my-3"></v-divider>
-      <v-row>
+  <v-container app class="mx-0 pa-0" fluid style="height: calc(100%-64px)">
+    <v-row class="my-0 px-5">
+      <!-- search input -->
+      <v-col cols="6">
+        <search-input />
+      </v-col>
+    </v-row>
+    <v-divider></v-divider>
+    <v-container class="pa-0" style="height: calc(100%-73px)" fluid>
+      <v-row class="ma-0 d-flex align-center justify-center">
+        <!-- search result -->
         <search-result />
         <!-- search map -->
-        <v-row id="map"></v-row>
+        <v-row id="map" class="ma-0"></v-row>
       </v-row>
-    </v-card>
+    </v-container>
   </v-container>
 </template>
 
@@ -85,9 +87,5 @@ export default {
 <style>
 hr {
   opacity: 50%;
-}
-
-side-bar {
-  position: sticky;
 }
 </style>

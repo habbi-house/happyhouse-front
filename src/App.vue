@@ -1,8 +1,10 @@
 <template>
-  <v-app style="position: relative; min-height: 100%">
+  <v-app style="position: relative">
     <app-bar />
-    <v-main>
-      <router-view />
+    <v-main
+      :style="$route.path === '/search' ? 'height: calc(100% - 64px)' : ''"
+    >
+      <router-view :style="$route.path === '/search' ? 'height: 100%' : ''" />
     </v-main>
     <app-footer v-if="$route.path !== '/search'" />
   </v-app>

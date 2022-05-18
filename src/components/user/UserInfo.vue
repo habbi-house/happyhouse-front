@@ -1,108 +1,136 @@
 <template>
-  <v-container class="elevation-1">
-    <v-row justify="center">
-      <h2>회원 정보</h2>
-    </v-row>
-    <v-row justify="center">
+  <v-container elevation="0" class="pa-0">
+    <h2 class="mb-7">회원 정보</h2>
+    <!-- <v-row justify="center">
       <v-img :src="src" max-width="125" />
-    </v-row>
-    <v-row justify="center">
-      <v-text-field
-        label="id"
-        required
-        outlined
-        maxlength="10"
-        v-model="user.id"
-        readonly
-    /></v-row>
-    <v-row>
-      <v-text-field
-        label="비밀번호"
-        required
-        outlined
-        maxlength="10"
-        v-model="user.password"
-        :readonly="!editMode"
-    /></v-row>
-    <v-row>
-      <v-text-field
-        label="이름"
-        required
-        outlined
-        maxlength="10"
-        v-model="user.name"
-        :readonly="!editMode"
-    /></v-row>
-    <v-row>
-      <v-text-field
-        label="이메일"
-        required
-        outlined
-        maxlength="20"
-        v-model="user.email"
-        :readonly="!editMode"
-    /></v-row>
-    <v-row>
-      <v-text-field
-        label="핸드폰번호"
-        required
-        outlined
-        maxlength="10"
-        v-model="user.phone"
-        :readonly="!editMode"
-    /></v-row>
-    <v-row justify="center">
-      <v-btn
-        @click="changeEdit"
-        color="primary"
-        class="white--text"
-        v-if="!editMode"
-      >
-        정보수정
-      </v-btn>
-      <v-btn
-        @click="deleteUser"
-        color="red"
-        class="white--text"
-        v-if="!editMode"
-      >
-        회원탈퇴
-      </v-btn>
-      <v-btn
-        @click="updateUser"
-        color="blue"
-        class="white--text"
-        v-if="editMode"
-      >
-        저장하기
-      </v-btn>
-      <v-btn
-        @click="changeEdit"
-        color="yellow"
-        class="black--text"
-        v-if="editMode"
-      >
-        취소하기
-      </v-btn>
-    </v-row>
+    </v-row> -->
+    <ValidationObserver ref="obs" v-slot="{ invalid, validated, handleSubmit }">
+      <v-form>
+        <!-- 아이디 -->
+        <ValidationProvider
+          name="id"
+          rules="required|min:4"
+          v-slot="{ errors, valid }"
+        >
+          <v-text-field
+            v-model="user.id"
+            :error-messages="errors"
+            :success="editMode ? valid : false"
+            label="아이디"
+            required
+            outlined
+            dense
+            :readonly="!editMode"
+          />
+        </ValidationProvider>
+        <!-- 비밀번호 -->
+        <ValidationProvider
+          name="pwd"
+          rules="required"
+          v-slot="{ errors, valid }"
+        >
+          <v-text-field
+            v-model="user.pwd"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show ? 'text' : 'password'"
+            :error-messages="errors"
+            :success="editMode ? valid : false"
+            label="비밀번호"
+            required
+            outlined
+            dense
+            :readonly="!editMode"
+            @click:append="show = !show"
+          />
+        </ValidationProvider>
+        <!-- 이름 -->
+        <ValidationProvider
+          name="pwd"
+          rules="required|min:3"
+          v-slot="{ errors, valid }"
+        >
+          <v-text-field
+            v-model="user.name"
+            :error-messages="errors"
+            :success="editMode ? valid : false"
+            label="이름"
+            required
+            outlined
+            dense
+            :readonly="!editMode"
+          />
+        </ValidationProvider>
+        <!-- 이메일 -->
+        <ValidationProvider
+          name="email"
+          rules="required|email"
+          v-slot="{ errors, valid }"
+        >
+          <v-text-field
+            v-model="user.email"
+            :error-messages="errors"
+            :success="editMode ? valid : false"
+            label="이메일"
+            required
+            outlined
+            dense
+            :readonly="!editMode"
+          />
+        </ValidationProvider>
+      </v-form>
+      <!-- Button -->
+      <div class="d-flex justify-end">
+        <div v-if="!editMode">
+          <v-btn
+            @click="changeEdit"
+            color="primary"
+            class="white--text mr-3"
+            v-if="!editMode"
+          >
+            정보수정
+          </v-btn>
+          <v-btn
+            @click="deleteUser"
+            color="lightgray"
+            class="white--text"
+            v-if="!editMode"
+          >
+            회원탈퇴
+          </v-btn>
+        </div>
+        <div v-else>
+          <v-btn
+            @click="handleSubmit(updateUser)"
+            color="success"
+            :disabled="invalid || !validated"
+            class="white--text mr-3"
+          >
+            저장하기
+          </v-btn>
+          <v-btn @click="changeEdit" color="disabled" class="black--text">
+            취소하기
+          </v-btn>
+        </div>
+      </div>
+    </ValidationObserver>
   </v-container>
 </template>
 
 <script>
-import profileImg from "@/assets/anonymous.png";
+// import profileImg from "@/assets/anonymous.png";
+import { ValidationProvider, ValidationObserver } from "vee-validate";
 
 export default {
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data() {
     return {
-      src: profileImg,
-      user: {
-        name: "김테스트",
-        id: "testID",
-        password: "q1w2e3r4",
-        email: "test@ssafy.com",
-        phone: "010-1234-5678",
-      },
+      // src: profileImg,
+      user: this.$store.state.user,
       editMode: false,
+      show: false,
     };
   },
   methods: {
