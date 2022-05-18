@@ -1,15 +1,18 @@
 <template>
-  <hello-world />
+  <v-main app class="pt-5">
+    <search-banner />
+    <!-- News Crawling + Board -->
+  </v-main>
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
+import SearchBanner from "@/components/home/SearchBanner.vue";
 
 export default {
   name: "HomeView",
 
   components: {
-    HelloWorld,
+    SearchBanner,
   },
 };
 </script>
