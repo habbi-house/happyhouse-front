@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mx-0 px-0" fluid style="height: 100vh">
+  <v-container class="mx-0 px-0" fluid style="height: 100%">
     <v-row class="px-5">
       <v-col cols="6">
         <search-input />

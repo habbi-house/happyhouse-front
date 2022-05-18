@@ -1,7 +1,7 @@
 <template>
-  <v-app>
+  <v-app style="position: relative; min-height: 100%">
     <app-bar />
-    <v-main style="height: 100vh">
+    <v-main>
       <router-view />
     </v-main>
     <app-footer v-if="$route.path !== '/search'" />
@@ -44,5 +44,12 @@ $typoOptions: display-4, display-3, display-2, display-1, headline, title,
 a {
   text-decoration: none;
   color: inherit !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 </style>
