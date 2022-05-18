@@ -1,5 +1,5 @@
 <template>
-  <v-main app class="pt-5">
+  <v-main app class="py-5">
     <search-banner />
     <!-- News Crawling + Board -->
   </v-main>

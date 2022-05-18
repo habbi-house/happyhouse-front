@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <app-bar />
-    <v-main>
+    <v-main style="height: 100vh">
       <router-view />
     </v-main>
     <app-footer v-if="$route.path !== '/search'" />

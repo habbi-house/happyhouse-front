@@ -26,6 +26,7 @@
 
     <!-- 우측: 사용자 관련 -->
     <v-btn
+      :to="{ name: 'signIn' }"
       color="white"
       elevation="0"
       class="no-uppercase mr-4 font-weight-bold gray--text"
@@ -33,6 +34,7 @@
       Sign In
     </v-btn>
     <v-btn
+      :to="{ name: 'signUp' }"
       color="primary"
       elevation="0"
       class="no-uppercase font-weight-bold white--text"

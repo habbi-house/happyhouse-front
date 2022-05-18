@@ -1,5 +1,5 @@
 <template>
-  <v-footer app color="white" class="pa-0">
+  <v-footer app color="white" class="pa-0" absolute>
     <v-container class="pa-0">
       <v-card flat tile width="100%">
         <v-card-text class="d-flex mb-3 px-5">
