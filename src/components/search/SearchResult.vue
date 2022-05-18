@@ -1,12 +1,12 @@
 <template>
-  <v-card class="overflow-y-auto y-scroll" fixed elevation="1">
-    <v-list>
+  <v-card fixed elevation="1">
+    <v-list width="320">
       <v-list-item v-for="(houseDeal, index) in houseDeals" :key="index" link>
-        <v-list-item-content class="pl-5 pr-2">
+        <v-list-item-content class="px-2 py-2">
           <!-- Img -->
-          <v-img :src="houseDeal.src" width="256">
+          <v-img :src="houseDeal.src">
             <div class="pa-3 white--text apart-info">
-              <span class="font-weight-bold">{{ houseDeal.apartName }}</span>
+              <span class="font-weight-bold">{{ houseDeal.aptName }}</span>
               <br />
               <span class="caption">
                 {{ houseDeal.floor }}, {{ houseDeal.dealDate }}
@@ -24,49 +24,11 @@
 </template>
 
 <script>
-import sampleImg from "@/assets/sample.jpg";
-
 export default {
   name: "SearchResult",
   data() {
     return {
-      houseDeals: [
-        {
-          src: sampleImg,
-          apartName: "더펜트하우스",
-          location: "서울특별시 강남구 청담동",
-          floor: "15층",
-          dealDate: "2021. 11. 4",
-        },
-        {
-          src: sampleImg,
-          apartName: "효성빌라101",
-          location: "서울특별시 강남구 청담동",
-          floor: "15층",
-          dealDate: "2021. 11. 4",
-        },
-        {
-          src: sampleImg,
-          apartName: "상일리츠빌",
-          location: "서울특별시 강남구 청담동",
-          floor: "15층",
-          dealDate: "2021. 11. 4",
-        },
-        {
-          src: sampleImg,
-          apartName: "한남더힐",
-          location: "서울특별시 강남구 청담동",
-          floor: "15층",
-          dealDate: "2021. 11. 4",
-        },
-        {
-          src: sampleImg,
-          apartName: "시그니엘",
-          location: "서울특별시 강남구 청담동",
-          floor: "15층",
-          dealDate: "2021. 11. 4",
-        },
-      ],
+      houseDeals: this.$store.state.houseDeals,
     };
   },
 };

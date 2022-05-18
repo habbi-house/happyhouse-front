@@ -1,17 +1,15 @@
 <template>
-  <v-container>
+  <v-container class="px-7">
     <v-row>
-      <v-col cols="7">
-        <div>
-          <h1>마이페이지</h1>
-        </div>
+      <v-col cols="12">
+        <h1>마이페이지</h1>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="3">
+    <v-row class="d-flex justify-space-between">
+      <v-col cols="12" sm="8" md="3">
         <user-info />
       </v-col>
-      <v-col cols="9">
+      <v-col cols="12" sm="10" md="8">
         <wish-list />
       </v-col>
     </v-row>
