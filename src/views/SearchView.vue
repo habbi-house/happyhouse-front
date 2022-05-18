@@ -1,15 +1,17 @@
 <template>
   <v-container class="mx-0 px-0" fluid style="height: 100%">
-    <v-row class="px-5">
-      <v-col cols="6">
-        <search-input />
-      </v-col>
-    </v-row>
-    <hr class="mt-3 mb-3" />
-    <v-row>
-      <search-result />
-      <!-- search map -->
-    </v-row>
+    <v-card>
+      <v-row class="px-5">
+        <v-col cols="6">
+          <search-input />
+        </v-col>
+      </v-row>
+      <v-divider class="my-3"></v-divider>
+      <v-row>
+        <search-result />
+        <!-- search map -->
+      </v-row>
+    </v-card>
   </v-container>
 </template>
 
