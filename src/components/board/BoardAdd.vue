@@ -24,7 +24,9 @@
     </v-row>
     <v-row>
       <v-spacer />
-      <v-btn @click="addPost" color="blue" class="white--text"> 등록 </v-btn>
+      <v-btn @click="addPost" color="green lighten-1" class="white--text">
+        등록
+      </v-btn>
     </v-row>
   </v-container>
 </template>

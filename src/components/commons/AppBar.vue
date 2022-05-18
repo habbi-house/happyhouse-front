@@ -57,7 +57,8 @@
 export default {
   data() {
     return {
-      user: this.$store.state.user,
+      user: null,
+      // user: this.$store.state.user,
     };
   },
 };
