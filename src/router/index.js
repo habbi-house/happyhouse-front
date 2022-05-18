@@ -18,7 +18,15 @@ const routes = [
   {
     path: "/board",
     name: "board",
+    redirect: "/board/boardlist",
     component: () => import("@/views/BoardView.vue"),
+    children: [
+      {
+        path: "boardlist",
+        name: "boardlist",
+        component: () => import("@/components/board/BoardList.vue"),
+      },
+    ],
   },
 ];
 
