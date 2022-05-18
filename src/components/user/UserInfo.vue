@@ -1,9 +1,20 @@
 <template>
   <v-container elevation="0" class="pa-0">
-    <h2 class="mb-7">회원 정보</h2>
+    <h2 class="mb-3">회원 정보</h2>
     <!-- <v-row justify="center">
       <v-img :src="src" max-width="125" />
     </v-row> -->
+    <!-- <v-sheet class="d-flex justify-center mb-4" width="100%">
+      <v-img
+        :src="src"
+        max-width="125"
+        class="rounded-circle"
+        elevation="2"
+      ></v-img>
+    </v-sheet> -->
+    <div class="mb-5 d-flex justify-center" width="100%">
+      <v-img :src="src" max-width="128" class="rounded-circle"></v-img>
+    </div>
     <ValidationObserver ref="obs" v-slot="{ invalid, validated, handleSubmit }">
       <v-form>
         <!-- 아이디 -->
@@ -118,6 +129,7 @@
 
 <script>
 // import profileImg from "@/assets/anonymous.png";
+import profileImg from "@/assets/kkekkuk.png";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 
 export default {
@@ -127,7 +139,7 @@ export default {
   },
   data() {
     return {
-      // src: profileImg,
+      src: profileImg,
       user: this.$store.state.user,
       editMode: false,
       show: false,
