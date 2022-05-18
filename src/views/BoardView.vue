@@ -1,9 +1,24 @@
 <template>
-  <div>board</div>
+  <v-main>
+    <v-container>
+      <v-row>
+        <board-header />
+      </v-row>
+      <v-row>
+        <router-view />
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
 
 <script>
-export default {};
+import BoardHeader from "@/components/board/BoardHeader.vue";
+
+export default {
+  components: {
+    BoardHeader,
+  },
+};
 </script>
 
 <style></style>
