@@ -61,8 +61,16 @@
         정보수정
       </v-btn>
       <v-btn
+        @click="deleteUser"
+        color="red"
+        class="white--text"
+        v-if="!editMode"
+      >
+        회원탈퇴
+      </v-btn>
+      <v-btn
         @click="updateUser"
-        color="primary"
+        color="blue"
         class="white--text"
         v-if="editMode"
       >
@@ -70,8 +78,8 @@
       </v-btn>
       <v-btn
         @click="changeEdit"
-        color="red"
-        class="white--text"
+        color="yellow"
+        class="black--text"
         v-if="editMode"
       >
         취소하기
@@ -104,6 +112,11 @@ export default {
     updateUser() {
       alert("회원 정보 수정 호출");
       this.changeEdit();
+    },
+    deleteUser() {
+      if (confirm("정말로 탈퇴하시겠습니까?")) {
+        alert("탈퇴 요청 전송");
+      }
     },
   },
 };
