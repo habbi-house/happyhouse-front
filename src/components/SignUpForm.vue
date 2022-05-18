@@ -17,69 +17,69 @@
               label="아이디"
               required
             />
-            <!-- 패스워드 -->
-            <ValidationProvider
-              name="pwd"
-              rules="required|confirmed:confirmPwd"
-              v-slot="{ errors, valid }"
-            >
-              <v-text-field
-                v-model="pwd"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="show1 ? 'text' : 'password'"
-                :error-messages="errors"
-                :success="valid"
-                label="비밀번호"
-                required
-                @click:append="show1 = !show1"
-              />
-            </ValidationProvider>
-            <!-- 패스워드 확인 -->
-            <ValidationProvider
-              name="confirmPwd"
-              rules="required"
-              v-slot="{ errors, valid }"
-              vid="confirmPwd"
-            >
-              <v-text-field
-                v-model="confirmPwd"
-                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="show2 ? 'text' : 'password'"
-                :error-messages="errors"
-                :success="valid"
-                label="비밀번호 확인"
-                required
-                @click:append="show2 = !show2"
-              />
-            </ValidationProvider>
-            <!-- 이름 -->
-            <ValidationProvider
-              name="name"
-              rules="required|min:3"
-              v-slot="{ errors, valid }"
-            >
-              <v-text-field
-                v-model="name"
-                :error-messages="errors"
-                :success="valid"
-                label="이름"
-                required
-              ></v-text-field>
-            </ValidationProvider>
-            <!-- 이메일 -->
-            <ValidationProvider
-              name="email"
-              rules="required|email"
-              v-slot="{ errors, valid }"
-            >
-              <v-text-field
-                v-model="email"
-                :error-messages="errors"
-                :success="valid"
-                label="이메일"
-                required
-              />
-            </ValidationProvider>
+          </ValidationProvider>
+          <!-- 비밀번호 -->
+          <ValidationProvider
+            name="pwd"
+            rules="required|confirmed:confirmPwd"
+            v-slot="{ errors, valid }"
+          >
+            <v-text-field
+              v-model="pwd"
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show1 ? 'text' : 'password'"
+              :error-messages="errors"
+              :success="valid"
+              label="비밀번호"
+              required
+              @click:append="show1 = !show1"
+            />
+          </ValidationProvider>
+          <!-- 비밀번호 확인 -->
+          <ValidationProvider
+            name="confirmPwd"
+            rules="required"
+            v-slot="{ errors, valid }"
+            vid="confirmPwd"
+          >
+            <v-text-field
+              v-model="confirmPwd"
+              :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show2 ? 'text' : 'password'"
+              :error-messages="errors"
+              :success="valid"
+              label="비밀번호 확인"
+              required
+              @click:append="show2 = !show2"
+            />
+          </ValidationProvider>
+          <!-- 이름 -->
+          <ValidationProvider
+            name="name"
+            rules="required|min:3"
+            v-slot="{ errors, valid }"
+          >
+            <v-text-field
+              v-model="name"
+              :error-messages="errors"
+              :success="valid"
+              label="이름"
+              required
+            ></v-text-field>
+          </ValidationProvider>
+          <!-- 이메일 -->
+          <ValidationProvider
+            name="email"
+            rules="required|email"
+            v-slot="{ errors, valid }"
+          >
+            <v-text-field
+              v-model="email"
+              :error-messages="errors"
+              :success="valid"
+              label="이메일"
+              required
+            />
           </ValidationProvider>
         </v-form>
       </v-card-text>
@@ -90,13 +90,13 @@
           :disabled="invalid || !validated"
           width="100%"
           elevation="0"
-          >Sign Up</v-btn
+          >회원가입</v-btn
         >
       </v-card-actions>
       <v-card-text>
         <v-divider></v-divider>
         <br />
-        <v-btn color="primary" width="100%" elevation="0">
+        <v-btn color="kakao" width="100%" elevation="0">
           카카오로 회원가입
         </v-btn>
       </v-card-text>
