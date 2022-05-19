@@ -1,19 +1,8 @@
 <template>
   <v-container elevation="0" class="pa-0">
     <h2 class="mb-3">회원 정보</h2>
-    <!-- <v-row justify="center">
-      <v-img :src="src" max-width="125" />
-    </v-row> -->
-    <!-- <v-sheet class="d-flex justify-center mb-4" width="100%">
-      <v-img
-        :src="src"
-        max-width="125"
-        class="rounded-circle"
-        elevation="2"
-      ></v-img>
-    </v-sheet> -->
     <div class="mb-5 d-flex justify-center" width="100%">
-      <v-img :src="src" max-width="128" class="rounded-circle"></v-img>
+      <v-img :src="src" max-width="128"></v-img>
     </div>
     <ValidationObserver ref="obs" v-slot="{ invalid, validated, handleSubmit }">
       <v-form>
@@ -92,11 +81,12 @@
       <!-- Button -->
       <div class="d-flex justify-end">
         <div v-if="!editMode">
+          <!-- TODO: OAuth 로그인 시, 정보 수정 막기 -->
           <v-btn
             @click="changeEdit"
             color="primary"
             class="white--text mr-3"
-            v-if="!editMode"
+            elevation="0"
           >
             정보수정
           </v-btn>
@@ -104,7 +94,7 @@
             @click="deleteUser"
             color="lightgray"
             class="white--text"
-            v-if="!editMode"
+            elevation="0"
           >
             회원탈퇴
           </v-btn>
@@ -115,10 +105,16 @@
             color="success"
             :disabled="invalid || !validated"
             class="white--text mr-3"
+            elevation="0"
           >
             저장하기
           </v-btn>
-          <v-btn @click="changeEdit" color="disabled" class="black--text">
+          <v-btn
+            @click="changeEdit"
+            color="disabled"
+            class="black--text"
+            elevation="0"
+          >
             취소하기
           </v-btn>
         </div>

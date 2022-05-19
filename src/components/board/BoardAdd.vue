@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-4 px-4">
     <v-row>
       <v-text-field
         label="제목"
@@ -22,9 +22,15 @@
         v-model="content"
       ></v-textarea>
     </v-row>
+    <br /><br />
     <v-row>
       <v-spacer />
-      <v-btn @click="addPost" color="green lighten-1" class="white--text">
+      <v-btn
+        @click="addPost"
+        color="green lighten-1"
+        elevation="0"
+        class="white--text"
+      >
         등록
       </v-btn>
     </v-row>

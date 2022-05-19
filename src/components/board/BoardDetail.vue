@@ -1,6 +1,5 @@
 <template>
-  <v-container>
-    <br />
+  <v-container class="mt-4 px-4">
     <v-row>
       <v-text-field
         label="제목"
@@ -30,6 +29,7 @@
         :readonly="boardAction != 'update'"
       ></v-textarea>
     </v-row>
+    <br /><br />
     <v-row>
       <v-btn
         @click="movePage"

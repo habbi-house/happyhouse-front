@@ -2,7 +2,9 @@
   <v-app style="position: relative">
     <app-bar />
     <v-main
-      :style="$route.path === '/search' ? 'height: calc(100% - 64px)' : ''"
+      :style="
+        $route.path === '/search' ? 'height: 100vh; max-height: 100%' : ''
+      "
     >
       <router-view :style="$route.path === '/search' ? 'height: 100%' : ''" />
     </v-main>

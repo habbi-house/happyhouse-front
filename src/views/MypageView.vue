@@ -1,10 +1,5 @@
 <template>
-  <v-container class="px-7">
-    <v-row>
-      <v-col cols="12">
-        <h1>마이페이지</h1>
-      </v-col>
-    </v-row>
+  <v-container class="pa-7">
     <v-row class="d-flex justify-space-between">
       <v-col cols="12" sm="8" md="3">
         <user-info />
