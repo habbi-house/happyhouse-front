@@ -56,7 +56,7 @@ export default {
     viewPost(post) {
       this.$router.push({
         name: "boardDetail",
-        params: { articleno: post.articleno },
+        params: { articleno: post.code },
       });
     },
   },

@@ -82,20 +82,23 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+const boardStore = "boardStore";
+
 export default {
   name: "BoardDetail",
   data() {
     return {
       boardAction: "detail",
-      post: {
-        articleno: this.$route.params.articleno,
-        title: "테스트용 글 제목",
-        content: "내용없음",
-        writer: "김테스트",
-        date: "20xx.xx.xx",
-        hit: "13",
-      },
     };
+  },
+  computed: {
+    ...mapState(boardStore, ["post"]),
+  },
+  created() {
+    const code = this.$route.params.articleno;
+    this.$store.dispatch("boardStore/setBoardDetail", code);
   },
   methods: {
     movePage() {
