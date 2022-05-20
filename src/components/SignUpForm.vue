@@ -96,7 +96,7 @@
       <v-card-text>
         <v-divider></v-divider>
         <br />
-        <v-btn color="kakao" width="100%" elevation="0" @click="kakaoLoginBtn">
+        <v-btn color="kakao" width="100%" elevation="0" @click="kakaoLogin">
           카카오로 로그인
         </v-btn>
       </v-card-text>
@@ -105,17 +105,18 @@
 </template>
 
 <script>
+/* eslint-disable prettier/prettier */
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { signUp } from "@/components/api/user.js";
 
 export default {
   data() {
     return {
       id: "",
       pwd: "",
-      confirmPwd: "",
       name: "",
       email: "",
-      phone: "",
+      confirmPwd: "",
       show1: false,
       show2: false,
     };
@@ -125,13 +126,29 @@ export default {
     ValidationObserver,
   },
   methods: {
-    submit() {
-      console.log("Success to submit!");
+    async submit() {
+      let user = {
+        id: this.id,
+        password: this.pwd,
+        name: this.name,
+        email: this.email,
+      };
+      await signUp(
+        user,
+        ({ data, status }) => {
+          if (status === 200) {
+            alert(data);
+          }
+        },
+        ({ response }) => {
+          alert(response.data);
+        }
+      );
+      this.$router.push({ name: "signIn" });
     },
-    /* eslint-disable */
-    kakaoLoginBtn() {
+    kakaoLogin() {
       window.location.replace(
-        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAOMAP_KEY}&redirect_uri=http://localhost:8080/kakao&response_type=code`
+        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAOMAP_KEY}&redirect_uri=${process.env.VUE_APP_API_BASE_URL}&response_type=code`
       );
     },
   },
