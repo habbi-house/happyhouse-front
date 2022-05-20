@@ -4,6 +4,9 @@
 
 <script>
 import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
+
+const loginStore = "loginStore";
 
 export default {
   data() {
@@ -16,14 +19,27 @@ export default {
     this.getToken();
   },
   methods: {
+    ...mapActions(loginStore, ["setToken", "setEmail"]),
+
     getToken() {
+      console.log("getToken");
       axios
         .get("http://localhost:8888/user/kakao?code=" + this.code)
-        .then((res) => {
-          console.log(res);
+        .then(({ data }) => {
+          console.log(data);
+          this.setToken(data);
+          this.setEmail(data.email);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("로그인에 실패했습니다.");
+        })
+        .finally(() => {
           this.$router.push("/");
         });
-      // user에 저장
+    },
+    getters: {
+      ...mapGetters(loginStore, ["isLogin"]),
     },
   },
 };

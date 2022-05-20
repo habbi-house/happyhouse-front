@@ -15,12 +15,30 @@
 <script>
 import AppBar from "@/components/commons/AppBar.vue";
 import AppFooter from "@/components/commons/AppFooter.vue";
+import vueCookies from "vue-cookies";
+import { mapActions } from "vuex";
+
+const loginStore = "loginStore";
 
 export default {
   name: "App",
   components: {
     AppBar,
     AppFooter,
+  },
+  created() {
+    let accessToken = vueCookies.get("accessToken");
+    let refreshToken = vueCookies.get("refreshToken");
+    if (accessToken) {
+      this.setToken({ accessToken, refreshToken });
+      this.setEmail(vueCookies.get("email"));
+    } else {
+      // refresh토큰이 있다면 access토큰 재발급
+      console.log("토큰 없음");
+    }
+  },
+  methods: {
+    ...mapActions(loginStore, ["setToken", "setEmail"]),
   },
 };
 </script>

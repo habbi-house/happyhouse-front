@@ -96,8 +96,8 @@
       <v-card-text>
         <v-divider></v-divider>
         <br />
-        <v-btn color="kakao" width="100%" elevation="0">
-          카카오로 회원가입
+        <v-btn color="kakao" width="100%" elevation="0" @click="kakaoLoginBtn">
+          카카오로 로그인
         </v-btn>
       </v-card-text>
     </v-card>
@@ -127,6 +127,12 @@ export default {
   methods: {
     submit() {
       console.log("Success to submit!");
+    },
+    /* eslint-disable */
+    kakaoLoginBtn() {
+      window.location.replace(
+        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAOMAP_KEY}&redirect_uri=http://localhost:8080/kakao&response_type=code`
+      );
     },
   },
 };

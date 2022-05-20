@@ -71,6 +71,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/kakao",
+    name: "kakao",
+    component: () => import("@/views/KakaoLoginView.vue"),
+  },
 ];
 
 const router = new VueRouter({

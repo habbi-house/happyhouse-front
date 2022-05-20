@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import sampleImg from "@/assets/sample.jpg";
 import boardStore from "@/store/modules/boardStore.js";
+import loginStore from "@/store/modules/loginStore.js";
 
 Vue.use(Vuex);
 
@@ -51,7 +52,7 @@ const houseDeals = [
 ];
 
 export default new Vuex.Store({
-  modules: { boardStore },
+  modules: { boardStore, loginStore },
   state: {
     user: user,
     houseDeals: houseDeals,

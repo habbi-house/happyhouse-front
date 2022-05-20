@@ -80,7 +80,7 @@ export default {
     /* eslint-disable */
     kakaoLoginBtn() {
       window.location.replace(
-        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAOMAP_KEY}&redirect_uri=http://localhost:8888/user/kakao&response_type=code`
+        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAOMAP_KEY}&redirect_uri=http://localhost:8080/kakao&response_type=code`
       );
     },
   },

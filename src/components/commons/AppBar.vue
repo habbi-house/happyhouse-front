@@ -27,7 +27,7 @@
     <v-spacer></v-spacer>
 
     <!-- 우측: 사용자 관련 -->
-    <div v-if="user">
+    <div v-if="isLogin">
       <router-link :to="{ name: 'mypage' }">
         <v-icon color="primary" large>mdi-account-circle</v-icon>
       </router-link>
@@ -54,12 +54,19 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
+const loginStore = "loginStore";
+
 export default {
   data() {
     return {
       user: null,
       // user: this.$store.state.user,
     };
+  },
+  computed: {
+    ...mapGetters(loginStore, ["isLogin"]),
   },
 };
 </script>
