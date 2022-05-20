@@ -102,7 +102,7 @@
         <div v-else>
           <v-btn
             @click="handleSubmit(updateUser)"
-            color="success"
+            color="green lighten1"
             :disabled="invalid || !validated"
             class="white--text mr-3"
             elevation="0"

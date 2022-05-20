@@ -16,7 +16,7 @@
           실거래가 조회
         </router-link>
         <router-link :to="{ name: 'board' }" class="ml-5">
-          자유 게시판
+          자유게시판
         </router-link>
         <!-- <router-link :to="{ name: 'camera' }" class="ml-5">
             Are You 햅피?
@@ -57,8 +57,8 @@
 export default {
   data() {
     return {
-      // user: null,
-      user: this.$store.state.user,
+      user: null,
+      // user: this.$store.state.user,
     };
   },
 };

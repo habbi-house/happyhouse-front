@@ -19,7 +19,7 @@
           color="primary"
           elevation="0"
           class="white--text font-weight-bold"
-          @click="moveWrite"
+          :to="{ name: 'boardAdd' }"
         >
           글 작성하기
         </v-btn>
