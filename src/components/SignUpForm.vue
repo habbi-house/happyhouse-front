@@ -148,7 +148,7 @@ export default {
     },
     kakaoLogin() {
       window.location.replace(
-        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAOMAP_KEY}&redirect_uri=${process.env.VUE_APP_API_BASE_URL}&response_type=code`
+        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_KEY}&redirect_uri=${process.env.VUE_APP_VUE_BASE_URL}/kakao&response_type=code`
       );
     },
   },

@@ -59,7 +59,10 @@
 </template>
 
 <script>
+/* eslint-disable */
+
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { signIn } from "@/components/api/user.js";
 
 export default {
   data() {
@@ -74,13 +77,27 @@ export default {
     ValidationObserver,
   },
   methods: {
-    submit() {
-      console.log("Success to submit!");
+    async submit() {
+      let user = {
+        id: this.id,
+        password: this.pwd,
+      };
+      await signIn(
+        user,
+        ({ data, status }) => {
+          if (status === 200) {
+            alert(data);
+          }
+          this.$router.push("/");
+        },
+        ({ response }) => {
+          alert(response.data);
+        }
+      );
     },
-    /* eslint-disable */
     kakaoLoginBtn() {
       window.location.replace(
-        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAOMAP_KEY}&redirect_uri=${process.env.VUE_APP_API_BASE_URL}/kakao&response_type=code`
+        `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VUE_APP_KAKAO_REST_KEY}&redirect_uri=${process.env.VUE_APP_VUE_BASE_URL}/kakao&response_type=code`
       );
     },
   },
