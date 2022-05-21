@@ -13,6 +13,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import AppBar from "@/components/commons/AppBar.vue";
 import AppFooter from "@/components/commons/AppFooter.vue";
 import vueCookies from "vue-cookies";
@@ -34,11 +35,17 @@ export default {
       this.setEmail(vueCookies.get("email"));
     } else {
       // refresh토큰이 있다면 access토큰 재발급
-      console.log("토큰 없음");
+    }
+
+    let token = vueCookies.get("token");
+    if (token) {
+      this.setUser(
+        JSON.parse(decodeURIComponent(escape(atob(token.split(".")[1])))).user
+      );
     }
   },
   methods: {
-    ...mapActions(userStore, ["setToken", "setEmail"]),
+    ...mapActions(userStore, ["setToken", "setUser", "setEmail"]),
   },
 };
 </script>

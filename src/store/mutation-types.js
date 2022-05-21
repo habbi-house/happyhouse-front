@@ -10,5 +10,7 @@ export const DELETE_POST = "DELETE_POST";
 
 /* Login Mutation Types */
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
-export const SET_REFRESH_TOKEN = "SET_REFRESH_TOKEN";
+export const SET_TOKEN_COOKIES = "SET_TOKEN_COOKIES";
+export const SET_EMAIL = "SET_EMAIL";
+export const SET_USER = "SET_USER";
 export const LOGOUT = "LOGOUT";

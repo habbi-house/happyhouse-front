@@ -19,7 +19,7 @@ export default {
     this.getToken();
   },
   methods: {
-    ...mapActions(userStore, ["setToken", "setEmail"]),
+    ...mapActions(userStore, ["setToken", "setTokenCookie", "setEmail"]),
 
     getToken() {
       console.log("getToken");
@@ -28,6 +28,7 @@ export default {
         .then(({ data }) => {
           console.log(data);
           this.setToken(data);
+          this.setTokenCookie(data);
           this.setEmail(data.email);
           axios.defaults.headers.common["x-access-token"] = data.accessToken;
         })

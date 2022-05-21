@@ -6,12 +6,12 @@ import userStore from "@/store/modules/userStore.js";
 
 Vue.use(Vuex);
 
-const user = {
-  id: "frog",
-  pwd: "q1w2e3r4",
-  name: "깨꾹이",
-  email: "frog@frog.com",
-};
+// const user = {
+//   id: "frog",
+//   pwd: "q1w2e3r4",
+//   name: "깨꾹이",
+//   email: "frog@frog.com",
+// };
 
 const houseDeals = [
   {
@@ -54,7 +54,7 @@ const houseDeals = [
 export default new Vuex.Store({
   modules: { boardStore, userStore },
   state: {
-    user: user,
+    // user: user,
     houseDeals: houseDeals,
   },
 });

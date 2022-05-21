@@ -30,7 +30,7 @@
           v-slot="{ errors, valid }"
         >
           <v-text-field
-            v-model="user.pwd"
+            v-model="user.password"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             :type="show ? 'text' : 'password'"
             :error-messages="errors"
@@ -127,6 +127,9 @@
 // import profileImg from "@/assets/anonymous.png";
 import profileImg from "@/assets/kkekkuk.png";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { mapState } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   components: {
@@ -136,7 +139,6 @@ export default {
   data() {
     return {
       src: profileImg,
-      user: this.$store.state.user,
       editMode: false,
       show: false,
     };
@@ -155,6 +157,9 @@ export default {
       }
       this.$route.push({ name: "/" });
     },
+  },
+  computed: {
+    ...mapState(userStore, ["user"]),
   },
 };
 </script>

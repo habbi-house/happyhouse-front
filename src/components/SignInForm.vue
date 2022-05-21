@@ -63,6 +63,10 @@
 
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { signIn } from "@/components/api/user.js";
+import axios from "axios";
+import { mapActions } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   data() {
@@ -77,6 +81,7 @@ export default {
     ValidationObserver,
   },
   methods: {
+    ...mapActions(userStore, ["setToken", "setUser"]),
     async submit() {
       let user = {
         id: this.id,
@@ -86,7 +91,13 @@ export default {
         user,
         ({ data, status }) => {
           if (status === 200) {
-            alert(data);
+            this.$cookies.set("token", data);
+            this.setToken({ accessToken: data });
+            this.setUser(
+              JSON.parse(decodeURIComponent(escape(atob(data.split(".")[1]))))
+                .user
+            );
+            alert("로그인 성공");
           }
           this.$router.push("/");
         },
