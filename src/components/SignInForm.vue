@@ -4,17 +4,17 @@
       <v-card-title style="font-size: 1.5rem">로그인</v-card-title>
       <v-card-text>
         <v-form>
-          <!-- 아이디 -->
+          <!-- 이메일 -->
           <ValidationProvider
-            name="id"
-            rules="required"
+            name="email"
+            rules="required|email"
             v-slot="{ errors, valid }"
           >
             <v-text-field
-              v-model="id"
+              v-model="email"
               :error-messages="errors"
               :success="valid"
-              label="아이디"
+              label="이메일"
               required
             />
           </ValidationProvider>
@@ -71,7 +71,7 @@ const userStore = "userStore";
 export default {
   data() {
     return {
-      id: "",
+      email: "",
       pwd: "",
       show: false,
     };
@@ -83,12 +83,11 @@ export default {
   methods: {
     ...mapActions(userStore, ["setToken", "setUser"]),
     async submit() {
-      let user = {
-        id: this.id,
-        password: this.pwd,
-      };
       await signIn(
-        user,
+        {
+          email: this.email,
+          password: this.pwd,
+        },
         ({ data, status }) => {
           if (status === 200) {
             this.$cookies.set("token", data);

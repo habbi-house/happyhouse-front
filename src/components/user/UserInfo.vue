@@ -6,17 +6,17 @@
     </div>
     <ValidationObserver ref="obs" v-slot="{ invalid, validated, handleSubmit }">
       <v-form>
-        <!-- 아이디 -->
+        <!-- 이메일 -->
         <ValidationProvider
-          name="id"
-          rules="required|min:4"
+          name="email"
+          rules="required|email"
           v-slot="{ errors, valid }"
         >
           <v-text-field
-            v-model="user.id"
+            v-model="user.email"
             :error-messages="errors"
             :success="editMode ? valid : false"
-            label="아이디"
+            label="이메일"
             required
             outlined
             dense
@@ -54,23 +54,6 @@
             :error-messages="errors"
             :success="editMode ? valid : false"
             label="이름"
-            required
-            outlined
-            dense
-            :readonly="!editMode"
-          />
-        </ValidationProvider>
-        <!-- 이메일 -->
-        <ValidationProvider
-          name="email"
-          rules="required|email"
-          v-slot="{ errors, valid }"
-        >
-          <v-text-field
-            v-model="user.email"
-            :error-messages="errors"
-            :success="editMode ? valid : false"
-            label="이메일"
             required
             outlined
             dense
