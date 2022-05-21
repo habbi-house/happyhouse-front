@@ -2,25 +2,30 @@ import vueCookies from "vue-cookies";
 import {
   SET_ACCESS_TOKEN,
   SET_TOKEN_COOKIES,
-  SET_EMAIL,
   SET_USER,
   LOGOUT,
 } from "@/store/mutation-types.js";
+import { parseJwt } from "@/util/Jwt";
 
 const userStore = {
   namespaced: true,
   state: {
     user: {
-      id: "frog",
-      password: "q1w2e3r4",
-      name: "깨꾹이",
-      email: "frog@frog.com",
+      no: null,
+      id: null,
+      password: null,
+      name: null,
+      email: null,
+      phone: null,
     },
     token: null,
   },
   getters: {
     isLogin(state) {
-      return state.token == null ? false : true;
+      return state.user.email == null ? false : true;
+    },
+    isKakao(state) {
+      return state.user.email && state.user.no == null ? true : false;
     },
   },
   mutations: {
@@ -31,9 +36,6 @@ const userStore = {
       vueCookies.set("accessToken", tokens.accessToken);
       vueCookies.set("refreshToken", tokens.refreshToken);
     },
-    SET_EMAIL(state, email) {
-      state.user.email = email;
-    },
     SET_USER(state, user) {
       console.log(user);
       state.user = user;
@@ -42,7 +44,7 @@ const userStore = {
       state.token = null;
       vueCookies.remove("accessToken");
       vueCookies.remove("refreshToken");
-      vueCookies.remove("email");
+      vueCookies.remove("kakaoUser");
       vueCookies.remove("token");
     },
   },
@@ -53,15 +55,11 @@ const userStore = {
     setTokenCookie: ({ commit }, tokens) => {
       commit(SET_TOKEN_COOKIES, tokens);
     },
-    setEmail: ({ commit }, email) => {
-      commit(SET_EMAIL, email);
-      vueCookies.set("email", email);
-    },
     logoutUser: ({ commit }) => {
       commit(LOGOUT);
     },
-    setUser: ({ commit }, user) => {
-      commit(SET_USER, user);
+    setUser: ({ commit }, token) => {
+      commit(SET_USER, parseJwt(token).user);
     },
   },
 };

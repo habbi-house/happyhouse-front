@@ -62,7 +62,7 @@
         </ValidationProvider>
       </v-form>
       <!-- Button -->
-      <div class="d-flex justify-end">
+      <div class="d-flex justify-end" v-if="!isKakao">
         <div v-if="!editMode">
           <!-- TODO: OAuth 로그인 시, 정보 수정 막기 -->
           <v-btn
@@ -110,7 +110,7 @@
 // import profileImg from "@/assets/anonymous.png";
 import profileImg from "@/assets/kkekkuk.png";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 const userStore = "userStore";
 
@@ -126,6 +126,13 @@ export default {
       show: false,
     };
   },
+  computed: {
+    ...mapState(userStore, ["user"]),
+    ...mapGetters(userStore, ["isLogin", "isKakao"]),
+  },
+  created() {
+    this.checkLogin();
+  },
   methods: {
     changeEdit() {
       this.editMode = !this.editMode;
@@ -140,9 +147,12 @@ export default {
       }
       this.$route.push({ name: "/" });
     },
-  },
-  computed: {
-    ...mapState(userStore, ["user"]),
+    checkLogin() {
+      if (!this.isLogin) {
+        alert("로그인 후에 이용해 주세요.");
+        this.$router.push({ name: "signIn" });
+      }
+    },
   },
 };
 </script>

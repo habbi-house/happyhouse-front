@@ -29,7 +29,8 @@ export default {
           console.log(data);
           this.setToken(data.tokens);
           this.setTokenCookie(data.tokens);
-          this.setUser(data.user);
+          this.setUser(data.token);
+          this.$cookies.set("token", data.token);
           axios.defaults.headers.common["x-access-token"] =
             data.tokens.accessToken;
         })

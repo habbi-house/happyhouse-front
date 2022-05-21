@@ -32,20 +32,17 @@ export default {
     let refreshToken = vueCookies.get("refreshToken");
     if (accessToken) {
       this.setToken({ accessToken, refreshToken });
-      this.setEmail(vueCookies.get("email"));
     } else {
       // refresh토큰이 있다면 access토큰 재발급
     }
 
     let token = vueCookies.get("token");
     if (token) {
-      this.setUser(
-        JSON.parse(decodeURIComponent(escape(atob(token.split(".")[1])))).user
-      );
+      this.setUser(token);
     }
   },
   methods: {
-    ...mapActions(userStore, ["setToken", "setUser", "setEmail"]),
+    ...mapActions(userStore, ["setToken", "setUser"]),
   },
 };
 </script>

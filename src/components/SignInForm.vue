@@ -63,7 +63,6 @@
 
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { signIn } from "@/components/api/user.js";
-import axios from "axios";
 import { mapActions } from "vuex";
 
 const userStore = "userStore";
@@ -90,18 +89,14 @@ export default {
         },
         ({ data, status }) => {
           if (status === 200) {
+            this.setUser(data);
             this.$cookies.set("token", data);
-            this.setToken({ accessToken: data });
-            this.setUser(
-              JSON.parse(decodeURIComponent(escape(atob(data.split(".")[1]))))
-                .user
-            );
             alert("로그인 성공");
           }
           this.$router.push("/");
         },
         ({ response }) => {
-          alert(response.data);
+          alert(response);
         }
       );
     },
