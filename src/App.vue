@@ -18,7 +18,7 @@ import AppFooter from "@/components/commons/AppFooter.vue";
 import vueCookies from "vue-cookies";
 import { mapActions } from "vuex";
 
-const loginStore = "loginStore";
+const userStore = "userStore";
 
 export default {
   name: "App",
@@ -38,7 +38,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(loginStore, ["setToken", "setEmail"]),
+    ...mapActions(userStore, ["setToken", "setEmail"]),
   },
 };
 </script>

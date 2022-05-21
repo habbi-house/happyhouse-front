@@ -6,7 +6,7 @@
 import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 
-const loginStore = "loginStore";
+const userStore = "userStore";
 
 export default {
   data() {
@@ -19,7 +19,7 @@ export default {
     this.getToken();
   },
   methods: {
-    ...mapActions(loginStore, ["setToken", "setEmail"]),
+    ...mapActions(userStore, ["setToken", "setEmail"]),
 
     getToken() {
       console.log("getToken");
@@ -29,6 +29,7 @@ export default {
           console.log(data);
           this.setToken(data);
           this.setEmail(data.email);
+          axios.defaults.headers.common["x-access-token"] = data.accessToken;
         })
         .catch((err) => {
           console.log(err);
@@ -39,7 +40,7 @@ export default {
         });
     },
     getters: {
-      ...mapGetters(loginStore, ["isLogin"]),
+      ...mapGetters(userStore, ["isLogin"]),
     },
   },
 };

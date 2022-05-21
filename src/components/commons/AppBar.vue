@@ -56,7 +56,7 @@
 <script>
 import { mapGetters } from "vuex";
 
-const loginStore = "loginStore";
+const userStore = "userStore";
 
 export default {
   data() {
@@ -66,7 +66,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(loginStore, ["isLogin"]),
+    ...mapGetters(userStore, ["isLogin"]),
   },
 };
 </script>
