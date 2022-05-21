@@ -1,5 +1,9 @@
 import vueCookies from "vue-cookies";
-import { SET_ACCESS_TOKEN, SET_REFRESH_TOKEN } from "@/store/mutation-types.js";
+import {
+  SET_ACCESS_TOKEN,
+  SET_REFRESH_TOKEN,
+  LOGOUT,
+} from "@/store/mutation-types.js";
 
 const userStore = {
   namespaced: true,
@@ -19,6 +23,12 @@ const userStore = {
     SET_REFRESH_TOKEN(state, refreshToken) {
       vueCookies.set("refreshToken", refreshToken);
     },
+    LOGOUT(state) {
+      state.token = null;
+      vueCookies.remove("accessToken");
+      vueCookies.remove("refreshToken");
+      vueCookies.remove("email");
+    },
   },
   actions: {
     setToken: ({ commit }, tokens) => {
@@ -28,6 +38,9 @@ const userStore = {
     setEmail: ({ rootState }, email) => {
       rootState.user.email = email;
       vueCookies.set("email", email);
+    },
+    logoutUser: ({ commit }) => {
+      commit(LOGOUT);
     },
   },
 };

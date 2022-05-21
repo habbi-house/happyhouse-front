@@ -28,6 +28,14 @@
 
     <!-- 우측: 사용자 관련 -->
     <div v-if="isLogin">
+      <v-btn
+        @click="logout"
+        color="white"
+        elevation="0"
+        class="no-uppercase mr-4 font-weight-bold gray--text"
+      >
+        Logout
+      </v-btn>
       <router-link :to="{ name: 'mypage' }">
         <v-icon color="primary" large>mdi-account-circle</v-icon>
       </router-link>
@@ -54,7 +62,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 const userStore = "userStore";
 
@@ -67,6 +75,13 @@ export default {
   },
   computed: {
     ...mapGetters(userStore, ["isLogin"]),
+  },
+  methods: {
+    ...mapActions(userStore, ["logoutUser"]),
+    logout() {
+      this.logoutUser();
+      location.reload();
+    },
   },
 };
 </script>
