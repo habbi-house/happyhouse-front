@@ -19,7 +19,7 @@ export default {
     this.getToken();
   },
   methods: {
-    ...mapActions(userStore, ["setToken", "setTokenCookie", "setEmail"]),
+    ...mapActions(userStore, ["setToken", "setTokenCookie", "setUser"]),
 
     getToken() {
       console.log("getToken");
@@ -27,10 +27,11 @@ export default {
         .get("http://localhost:8888/user/kakao?code=" + this.code)
         .then(({ data }) => {
           console.log(data);
-          this.setToken(data);
-          this.setTokenCookie(data);
-          this.setEmail(data.email);
-          axios.defaults.headers.common["x-access-token"] = data.accessToken;
+          this.setToken(data.tokens);
+          this.setTokenCookie(data.tokens);
+          this.setUser(data.user);
+          axios.defaults.headers.common["x-access-token"] =
+            data.tokens.accessToken;
         })
         .catch((err) => {
           console.log(err);
