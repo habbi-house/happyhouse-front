@@ -10,10 +10,32 @@
 
 <script>
 import SignInForm from "@/components/SignInForm.vue";
+import { mapGetters } from "vuex";
+
+const userStore = "userStore";
+
 export default {
   name: "SignInView",
   components: {
     SignInForm,
+  },
+  computed: {
+    ...mapGetters(userStore, ["isLogin"]),
+  },
+  watch: {
+    isLogin: function () {
+      this.checkLogin();
+    },
+  },
+  methods: {
+    checkLogin() {
+      if (this.isLogin) {
+        this.$router.push("/");
+      }
+    },
+  },
+  created() {
+    this.checkLogin();
   },
 };
 </script>

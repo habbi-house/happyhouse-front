@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mapActions, mapGetters } from "vuex";
 
 const userStore = "userStore";
@@ -19,28 +18,12 @@ export default {
     this.getToken();
   },
   methods: {
-    ...mapActions(userStore, ["setToken", "setTokenCookie", "setUser"]),
+    ...mapActions(userStore, ["loginKakao"]),
 
-    getToken() {
+    async getToken() {
       console.log("getToken");
-      axios
-        .get("http://localhost:8888/user/kakao?code=" + this.code)
-        .then(({ data }) => {
-          console.log(data);
-          this.setToken(data.tokens);
-          this.setTokenCookie(data.tokens);
-          this.setUser(data.token);
-          this.$cookies.set("token", data.token);
-          axios.defaults.headers.common["x-access-token"] =
-            data.tokens.accessToken;
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("로그인에 실패했습니다.");
-        })
-        .finally(() => {
-          this.$router.push("/");
-        });
+      await this.loginKakao(this.code);
+      this.$router.push("/");
     },
     getters: {
       ...mapGetters(userStore, ["isLogin"]),

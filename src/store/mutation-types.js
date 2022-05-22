@@ -13,3 +13,5 @@ export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const SET_TOKEN_COOKIES = "SET_TOKEN_COOKIES";
 export const SET_USER = "SET_USER";
 export const LOGOUT = "LOGOUT";
+export const SET_AXIOS_TOKEN = "SET_AXIOS_TOKEN";
+export const SET_JWT_TOKEN = "SET_JWT_TOKEN";

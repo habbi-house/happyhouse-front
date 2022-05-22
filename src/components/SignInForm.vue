@@ -62,7 +62,6 @@
 /* eslint-disable */
 
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { signIn } from "@/components/api/user.js";
 import { mapActions } from "vuex";
 
 const userStore = "userStore";
@@ -80,25 +79,12 @@ export default {
     ValidationObserver,
   },
   methods: {
-    ...mapActions(userStore, ["setToken", "setUser"]),
+    ...mapActions(userStore, ["login"]),
     async submit() {
-      await signIn(
-        {
-          email: this.email,
-          password: this.pwd,
-        },
-        ({ data, status }) => {
-          if (status === 200) {
-            this.setUser(data);
-            this.$cookies.set("token", data);
-            alert("로그인 성공");
-          }
-          this.$router.push("/");
-        },
-        ({ response }) => {
-          alert(response);
-        }
-      );
+      await this.login({
+        email: this.email,
+        password: this.pwd,
+      });
     },
     kakaoLoginBtn() {
       window.location.replace(

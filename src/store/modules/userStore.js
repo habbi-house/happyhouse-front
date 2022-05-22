@@ -1,11 +1,18 @@
+/* eslint-disable */
 import vueCookies from "vue-cookies";
 import {
   SET_ACCESS_TOKEN,
   SET_TOKEN_COOKIES,
   SET_USER,
   LOGOUT,
+  SET_AXIOS_TOKEN,
+  SET_JWT_TOKEN,
 } from "@/store/mutation-types.js";
 import { parseJwt } from "@/util/Jwt";
+import { getApiInstance } from "@/components/api/index.js";
+import { signIn } from "@/components/api/user.js";
+
+const axios = getApiInstance();
 
 const userStore = {
   namespaced: true,
@@ -47,6 +54,12 @@ const userStore = {
       vueCookies.remove("kakaoUser");
       vueCookies.remove("token");
     },
+    SET_AXIOS_TOKEN(state, token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    },
+    SET_JWT_TOKEN(state, token) {
+      vueCookies.set("token", token);
+    },
   },
   actions: {
     setToken: ({ commit }, tokens) => {
@@ -60,6 +73,39 @@ const userStore = {
     },
     setUser: ({ commit }, token) => {
       commit(SET_USER, parseJwt(token).user);
+    },
+    loginKakao: ({ commit }, code) => {
+      axios
+        .get("http://localhost:8888/user/kakao?code=" + code)
+        .then(({ data }) => {
+          console.log(data);
+          commit(SET_ACCESS_TOKEN, data.tokens);
+          commit(SET_TOKEN_COOKIES, data.tokens);
+          commit(SET_USER, parseJwt(data.token).user);
+          commit(SET_AXIOS_TOKEN, data.token);
+          commit(SET_JWT_TOKEN, data.token);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("로그인에 실패했습니다.");
+        });
+      console.log(axios.defaults.headers);
+    },
+    login: async ({ commit }, user) => {
+      await signIn(
+        user,
+        ({ data, status }) => {
+          if (status === 200) {
+            commit(SET_USER, parseJwt(data).user);
+            commit(SET_AXIOS_TOKEN, data);
+            commit(SET_JWT_TOKEN, data);
+            alert("로그인 성공");
+          }
+        },
+        ({ response }) => {
+          alert(response.data);
+        }
+      );
     },
   },
 };
