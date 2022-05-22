@@ -15,8 +15,11 @@ async function withdrawUser(no, success, fail) {
 }
 
 async function updateUser(user, success, fail) {
-  console.log(user);
   await api.post(`/user/update`, user).then(success).catch(fail);
 }
 
-export { signUp, signIn, withdrawUser, updateUser };
+async function getUserByNo(no, success, fail) {
+  await api.get(`/user/${no}`).then(success).catch(fail);
+}
+
+export { signUp, signIn, withdrawUser, updateUser, getUserByNo };

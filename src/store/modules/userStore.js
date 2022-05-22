@@ -15,6 +15,7 @@ import {
   signUp,
   withdrawUser,
   updateUser,
+  getUserByNo,
 } from "@/components/api/user.js";
 
 const axios = getApiInstance();
@@ -52,7 +53,6 @@ const userStore = {
       vueCookies.set("refreshToken", tokens.refreshToken);
     },
     SET_USER(state, user) {
-      console.log(user);
       state.user = user;
     },
     LOGOUT(state) {
@@ -154,13 +154,25 @@ const userStore = {
         user,
         ({ data, status }) => {
           if (status === 200) {
-            commit(SET_USER, user);
+            commit(SET_USER, data);
             alert("회원 정보 수정 완료");
           }
         },
         ({ response }) => {
           console.log(response);
-          alert(response);
+        }
+      );
+    },
+    getUserByNo: async ({ state, commit }) => {
+      await getUserByNo(
+        state.user.no,
+        ({ data, status }) => {
+          if (status === 200) {
+            commit(SET_USER, data);
+          }
+        },
+        ({ response }) => {
+          console.log(response);
         }
       );
     },
