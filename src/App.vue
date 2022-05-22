@@ -39,10 +39,11 @@ export default {
     let token = vueCookies.get("token");
     if (token) {
       this.setUser(token);
+      this.getUserByNo();
     }
   },
   methods: {
-    ...mapActions(userStore, ["setToken", "setUser"]),
+    ...mapActions(userStore, ["setToken", "setUser", "getUserByNo"]),
   },
 };
 </script>
