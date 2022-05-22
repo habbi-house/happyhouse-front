@@ -8,7 +8,7 @@
     >
       <router-view :style="$route.path === '/search' ? 'height: 100%' : ''" />
     </v-main>
-    <app-footer v-if="$route.path !== '/search'" />
+    <app-footer v-if="!$route.path.startsWith('/search')" />
   </v-app>
 </template>
 

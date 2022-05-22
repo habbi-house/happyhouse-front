@@ -7,6 +7,7 @@ import {
   SET_DONG_LIST,
   SET_GUNGU,
   SET_GUNGU_LIST,
+  SET_HOUSE,
   SET_HOUSE_LIST,
   SET_SIDO,
   SET_SIDO_LIST,
@@ -15,6 +16,7 @@ import {
 const houseStore = {
   namespaced: true,
   state: {
+    house: {},
     houses: [],
     address: [],
     sidos: [],
@@ -77,6 +79,9 @@ const houseStore = {
     },
     [SET_HOUSE_LIST]: (state, houses) => {
       state.houses = houses;
+    },
+    [SET_HOUSE]: (state, id) => {
+      state.house = state.houses.find((house) => house.aptCode === id);
     },
   },
   actions: {

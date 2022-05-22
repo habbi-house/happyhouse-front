@@ -29,6 +29,13 @@ const routes = [
     path: "/search",
     name: "search",
     component: () => import("@/views/SearchView.vue"),
+    children: [
+      {
+        path: ":id",
+        name: "aptDetail",
+        component: () => import("@/components/search/SearchAptDetail.vue"),
+      },
+    ],
   },
   {
     path: "/board",
