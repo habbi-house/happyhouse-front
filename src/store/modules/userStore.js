@@ -10,7 +10,7 @@ import {
 } from "@/store/mutation-types.js";
 import { parseJwt } from "@/util/Jwt";
 import { getApiInstance } from "@/components/api/index.js";
-import { signIn } from "@/components/api/user.js";
+import { signIn, withdrawUser } from "@/components/api/user.js";
 
 const axios = getApiInstance();
 
@@ -34,6 +34,9 @@ const userStore = {
     isKakao(state) {
       return state.user.email && state.user.no == null ? true : false;
     },
+    no(state) {
+      return state.user.no;
+    },
   },
   mutations: {
     SET_ACCESS_TOKEN(state, accessToken) {
@@ -49,9 +52,16 @@ const userStore = {
     },
     LOGOUT(state) {
       state.token = null;
+      state.user = {
+        no: null,
+        id: null,
+        password: null,
+        name: null,
+        email: null,
+        phone: null,
+      };
       vueCookies.remove("accessToken");
       vueCookies.remove("refreshToken");
-      vueCookies.remove("kakaoUser");
       vueCookies.remove("token");
     },
     SET_AXIOS_TOKEN(state, token) {
@@ -104,6 +114,20 @@ const userStore = {
         },
         ({ response }) => {
           alert(response.data);
+        }
+      );
+    },
+    withdrawUser: async ({ commit }, no) => {
+      await withdrawUser(
+        no,
+        ({ data, status }) => {
+          if (status === 200) {
+            alert(data);
+            commit(LOGOUT);
+          }
+        },
+        ({ response }) => {
+          alert("에러발생 관리자에게 문의하세요.");
         }
       );
     },

@@ -10,4 +10,8 @@ async function signIn(user, success, fail) {
   await api.post(`/user/login`, user).then(success).catch(fail);
 }
 
-export { signUp, signIn };
+async function withdrawUser(no, success, fail) {
+  await api.post(`/user/delete`, no).then(success).catch(fail);
+}
+
+export { signUp, signIn, withdrawUser };

@@ -110,7 +110,7 @@
 // import profileImg from "@/assets/anonymous.png";
 import profileImg from "@/assets/kkekkuk.png";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 const userStore = "userStore";
 
@@ -128,12 +128,13 @@ export default {
   },
   computed: {
     ...mapState(userStore, ["user"]),
-    ...mapGetters(userStore, ["isLogin", "isKakao"]),
+    ...mapGetters(userStore, ["isLogin", "isKakao", "no"]),
   },
   created() {
     this.checkLogin();
   },
   methods: {
+    ...mapActions(userStore, ["withdrawUser"]),
     changeEdit() {
       this.editMode = !this.editMode;
     },
@@ -141,11 +142,11 @@ export default {
       alert("회원 정보 수정 호출");
       this.changeEdit();
     },
-    deleteUser() {
+    async deleteUser() {
       if (confirm("정말로 탈퇴하시겠습니까?")) {
-        alert("탈퇴 요청 전송");
+        await this.withdrawUser(this.no);
       }
-      this.$route.push({ name: "/" });
+      this.$router.push("/");
     },
     checkLogin() {
       if (!this.isLogin) {
