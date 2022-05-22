@@ -28,18 +28,16 @@ export default {
     AppFooter,
   },
   created() {
-    let accessToken = vueCookies.get("accessToken");
-    let refreshToken = vueCookies.get("refreshToken");
-    if (accessToken) {
-      this.setToken({ accessToken, refreshToken });
-    } else {
-      // refresh토큰이 있다면 access토큰 재발급
-    }
-
     let token = vueCookies.get("token");
     if (token) {
       this.setUser(token);
-      this.getUserByNo();
+      let accessToken = vueCookies.get("accessToken");
+      let refreshToken = vueCookies.get("refreshToken");
+      if (accessToken) {
+        this.setToken({ accessToken, refreshToken });
+      } else {
+        this.getUserByNo();
+      }
     }
   },
   methods: {
