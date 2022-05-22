@@ -93,7 +93,9 @@
 <script>
 /* eslint-disable prettier/prettier */
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { signUp } from "@/components/api/user.js";
+import { mapActions } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   data() {
@@ -111,23 +113,13 @@ export default {
     ValidationObserver,
   },
   methods: {
+    ...mapActions(userStore, ["signUp"]),
     async submit() {
-      let user = {
+      await this.signUp({
         email: this.email,
         password: this.pwd,
         name: this.name,
-      };
-      await signUp(
-        user,
-        ({ data, status }) => {
-          if (status === 200) {
-            alert(data);
-          }
-        },
-        ({ response }) => {
-          alert(response.data);
-        }
-      );
+      });
       this.$router.push({ name: "signIn" });
     },
     kakaoLogin() {

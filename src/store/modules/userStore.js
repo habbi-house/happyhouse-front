@@ -10,7 +10,7 @@ import {
 } from "@/store/mutation-types.js";
 import { parseJwt } from "@/util/Jwt";
 import { getApiInstance } from "@/components/api/index.js";
-import { signIn, withdrawUser } from "@/components/api/user.js";
+import { signIn, signUp, withdrawUser } from "@/components/api/user.js";
 
 const axios = getApiInstance();
 
@@ -110,6 +110,19 @@ const userStore = {
             commit(SET_AXIOS_TOKEN, data);
             commit(SET_JWT_TOKEN, data);
             alert("로그인 성공");
+          }
+        },
+        ({ response }) => {
+          alert(response.data);
+        }
+      );
+    },
+    signUp: async ({ commit }, user) => {
+      await signUp(
+        user,
+        ({ data, status }) => {
+          if (status === 200) {
+            alert(data);
           }
         },
         ({ response }) => {
