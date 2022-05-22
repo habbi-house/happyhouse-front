@@ -42,11 +42,13 @@ const houseStore = {
     [SET_GUNGU_LIST]: (state) => {
       state.gungus = [
         ...new Set(
-          state.address.map((x) => {
-            if (x.sidoName === state.sido && x.gugunName) {
-              return x.gugunName;
-            }
-          })
+          state.address
+            .map((x) => {
+              if (x.sidoName === state.sido && x.gugunName) {
+                return x.gugunName;
+              }
+            })
+            .filter((x) => x)
         ),
       ].sort();
     },
@@ -63,11 +65,13 @@ const houseStore = {
     [SET_DONG_LIST]: (state) => {
       state.dongs = [
         ...new Set(
-          state.address.map((x) => {
-            if (x.gugunName === state.gungu && x.dongName) {
-              return { name: x.dongName, code: x.dongCode };
-            }
-          })
+          state.address
+            .map((x) => {
+              if (x.gugunName === state.gungu && x.dongName) {
+                return { name: x.dongName, code: x.dongCode };
+              }
+            })
+            .filter((x) => x)
         ),
       ].sort();
     },
