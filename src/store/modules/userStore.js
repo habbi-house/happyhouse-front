@@ -10,7 +10,12 @@ import {
 } from "@/store/mutation-types.js";
 import { parseJwt } from "@/util/Jwt";
 import { getApiInstance } from "@/components/api/index.js";
-import { signIn, signUp, withdrawUser } from "@/components/api/user.js";
+import {
+  signIn,
+  signUp,
+  withdrawUser,
+  updateUser,
+} from "@/components/api/user.js";
 
 const axios = getApiInstance();
 
@@ -141,6 +146,21 @@ const userStore = {
         },
         ({ response }) => {
           alert("에러발생 관리자에게 문의하세요.");
+        }
+      );
+    },
+    updateUser: async ({ commit }, user) => {
+      await updateUser(
+        user,
+        ({ data, status }) => {
+          if (status === 200) {
+            commit(SET_USER, user);
+            alert("회원 정보 수정 완료");
+          }
+        },
+        ({ response }) => {
+          console.log(response);
+          alert(response);
         }
       );
     },

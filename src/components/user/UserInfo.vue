@@ -4,7 +4,7 @@
     <div class="mb-5 d-flex justify-center" width="100%">
       <v-img :src="src" max-width="128"></v-img>
     </div>
-    <ValidationObserver ref="obs" v-slot="{ invalid, validated, handleSubmit }">
+    <ValidationObserver ref="obs" v-slot="{ invalid, handleSubmit }">
       <v-form>
         <!-- 이메일 -->
         <ValidationProvider
@@ -20,7 +20,7 @@
             required
             outlined
             dense
-            :readonly="!editMode"
+            :readonly="true"
           />
         </ValidationProvider>
         <!-- 비밀번호 -->
@@ -84,9 +84,9 @@
         </div>
         <div v-else>
           <v-btn
-            @click="handleSubmit(updateUser)"
+            @click="handleSubmit(editUser)"
             color="green lighten1"
-            :disabled="invalid || !validated"
+            :disabled="invalid"
             class="white--text mr-3"
             elevation="0"
           >
@@ -134,12 +134,12 @@ export default {
     this.checkLogin();
   },
   methods: {
-    ...mapActions(userStore, ["withdrawUser"]),
+    ...mapActions(userStore, ["withdrawUser", "updateUser"]),
     changeEdit() {
       this.editMode = !this.editMode;
     },
-    updateUser() {
-      alert("회원 정보 수정 호출");
+    editUser() {
+      this.updateUser(this.user);
       this.changeEdit();
     },
     async deleteUser() {

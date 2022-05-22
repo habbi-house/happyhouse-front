@@ -14,4 +14,9 @@ async function withdrawUser(no, success, fail) {
   await api.post(`/user/delete`, no).then(success).catch(fail);
 }
 
-export { signUp, signIn, withdrawUser };
+async function updateUser(user, success, fail) {
+  console.log(user);
+  await api.post(`/user/update`, user).then(success).catch(fail);
+}
+
+export { signUp, signIn, withdrawUser, updateUser };
