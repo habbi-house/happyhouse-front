@@ -9,6 +9,7 @@
           hide-details
           :outlined="isSearch"
           :dense="isSearch"
+          @change="getGungus"
         />
       </v-col>
       <v-col cols="3" class="pl-0 py-1">
@@ -19,16 +20,19 @@
           hide-details
           :outlined="isSearch"
           :dense="isSearch"
+          @change="getDongs"
         />
       </v-col>
       <v-col cols="3" class="pl-0 py-1">
         <v-select
           :items="dongs"
+          item-text="name"
           v-model="dong"
           label="동"
           hide-details
           :outlined="isSearch"
           :dense="isSearch"
+          @change="setDong"
         />
       </v-col>
       <v-col cols="1" class="pl-0 py-1">
@@ -38,6 +42,7 @@
             class="font-weight-bold"
             height="40px"
             elevation="0"
+            @click="searchHouse"
             ><v-icon>mdi-magnify</v-icon></v-btn
           >
         </div>
@@ -52,6 +57,10 @@
 </template>
 
 <script>
+import { mapActions, mapMutations, mapState } from "vuex";
+
+const houseStore = "houseStore";
+
 export default {
   name: "searchInput",
   data() {
@@ -60,11 +69,39 @@ export default {
       sido: "",
       gungu: "",
       dong: "",
-      // 이후 vuex로 관리
-      sidos: ["서울특별시", "경기도"],
-      gungus: ["강남구", "송파구"],
-      dongs: ["역삼동", "잠실동"],
     };
+  },
+  computed: {
+    ...mapState(houseStore, ["sidos", "gungus", "dongs"]),
+  },
+  created() {
+    this.loadAddress();
+  },
+  methods: {
+    ...mapMutations(houseStore, [
+      "SET_SIDO",
+      "SET_GUNGU",
+      "SET_DONG",
+      "SET_DONG_CODE",
+      "SET_GUNGU_LIST",
+      "SET_DONG_LIST",
+    ]),
+    ...mapActions(houseStore, ["loadAddress", "searchHouseByDong"]),
+    getGungus() {
+      this.SET_SIDO(this.sido);
+      this.SET_GUNGU_LIST();
+    },
+    getDongs() {
+      this.SET_GUNGU(this.gungu);
+      this.SET_DONG_LIST();
+    },
+    setDong() {
+      this.SET_DONG(this.dong);
+      this.SET_DONG_CODE();
+    },
+    searchHouse() {
+      this.searchHouseByDong();
+    },
   },
 };
 </script>

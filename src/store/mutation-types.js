@@ -15,3 +15,14 @@ export const SET_USER = "SET_USER";
 export const LOGOUT = "LOGOUT";
 export const SET_AXIOS_TOKEN = "SET_AXIOS_TOKEN";
 export const SET_JWT_TOKEN = "SET_JWT_TOKEN";
+
+/* House Mutation Types */
+export const SET_ADDRESS = "SET_ADDRESS";
+export const SET_SIDO = "SET_SIDO";
+export const SET_SIDO_LIST = "SET_SIDO_LIST";
+export const SET_GUNGU = "SET_GUNGU";
+export const SET_GUNGU_LIST = "SET_GUNGU_LIST";
+export const SET_DONG = "SET_DONG";
+export const SET_DONG_CODE = "SET_DONG_CODE";
+export const SET_DONG_LIST = "SET_DONG_LIST";
+export const SET_HOUSE_LIST = "SET_HOUSE_LIST";

@@ -10,4 +10,8 @@ async function getPost(code, success, fail) {
   await api.get(`/board/${code}`).then(success).catch(fail);
 }
 
-export { getAllPosts, getPost };
+async function createPost(post, success, fail) {
+  await api.post(`/board/create`, post).then(success).catch(fail);
+}
+
+export { getAllPosts, getPost, createPost };
