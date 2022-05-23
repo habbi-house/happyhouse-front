@@ -30,3 +30,4 @@ export const CLEAR_HOUSE_LIST = "CLEAR_HOUSE_LIST";
 export const SET_HOUSE_LIST = "SET_HOUSE_LIST";
 export const SET_HOUSE = "SET_HOUSE";
 export const SET_HOUSE_DEAL_LIST = "SET_HOUSE_DEAL_LIST";
+export const SET_RECENT_DEALS = "SET_RECENT_DEALS";

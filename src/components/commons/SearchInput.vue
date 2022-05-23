@@ -74,8 +74,8 @@ export default {
   computed: {
     ...mapState(houseStore, ["sidos", "gungus", "dongs"]),
   },
-  created() {
-    this.loadAddress();
+  async created() {
+    await this.loadAddress();
   },
   methods: {
     ...mapMutations(houseStore, [
@@ -99,8 +99,8 @@ export default {
       this.SET_DONG(this.dong);
       this.SET_DONG_CODE();
     },
-    searchHouse() {
-      this.searchHouseByDong();
+    async searchHouse() {
+      await this.searchHouseByDong();
     },
   },
 };

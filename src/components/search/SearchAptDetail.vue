@@ -60,7 +60,7 @@
 
 <script>
 import sampleImg from "@/assets/sample.jpg";
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import VueApexCharts from "vue-apexcharts";
 
 const houseStore = "houseStore";
@@ -99,15 +99,14 @@ export default {
       },
     };
   },
-  computed: {
-    ...mapState(houseStore, ["house", "houseDeals"]),
-    ...mapGetters(houseStore, ["recentDeals"]),
+  created() {
+    this.series[0].data = this.recentDeals.map((x) => x.amount).reverse();
+    this.chartOptions.xaxis.categories = this.recentDeals
+      .map((x) => x.date)
+      .reverse();
   },
-  watch: {
-    recentDeals(arr) {
-      this.series[0].data = arr.map((x) => x.amount).reverse();
-      this.chartOptions.xaxis.categories = arr.map((x) => x.date).reverse();
-    },
+  computed: {
+    ...mapState(houseStore, ["house", "houseDeals", "recentDeals"]),
   },
   methods: {
     goBack() {

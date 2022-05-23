@@ -6,7 +6,7 @@
         :key="index"
         link
         :id="house.aptCode"
-        @click="getHouseDetail(house.aptCode)"
+        @click="() => getHouseDetail(house.aptCode)"
       >
         <v-list-item-content class="px-2 py-2">
           <!-- Img -->
@@ -46,9 +46,9 @@ export default {
   methods: {
     ...mapMutations(houseStore, [SET_HOUSE]),
     ...mapActions(houseStore, ["searchHouseDealByApt"]),
-    getHouseDetail(aptCode) {
+    async getHouseDetail(aptCode) {
       this.SET_HOUSE(aptCode);
-      this.searchHouseDealByApt();
+      await this.searchHouseDealByApt();
       this.$router.push("search/" + aptCode);
     },
   },
