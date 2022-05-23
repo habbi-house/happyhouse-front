@@ -38,6 +38,11 @@
 </template>
 
 <script>
+import { mapActions, mapGetters, mapState } from "vuex";
+
+const userStore = "userStore";
+const boardStore = "boardStore";
+
 export default {
   name: "BoardAdd",
   data() {
@@ -46,13 +51,31 @@ export default {
       content: "",
     };
   },
+  computed: {
+    ...mapState(userStore, ["user"]),
+    ...mapGetters(userStore, ["isLogin"]),
+  },
   methods: {
-    addPost() {
-      alert("글 작성 요청");
-      this.title = "";
-      this.content = "";
+    ...mapActions(boardStore, ["createPost", "setBoardList"]),
+    async addPost() {
+      await this.createPost({
+        title: this.title,
+        content: this.content,
+        writer: this.user.name,
+        email: this.user.email,
+      });
+      this.setBoardList();
       this.$router.push({ name: "board" });
     },
+    checkLogin() {
+      if (!this.isLogin) {
+        alert("로그인 후에 이용해 주세요.");
+        this.$router.push({ name: "signIn" });
+      }
+    },
+  },
+  created() {
+    this.checkLogin();
   },
 };
 </script>

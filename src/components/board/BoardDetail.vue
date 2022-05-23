@@ -54,6 +54,7 @@
           elevation="0"
           color="primary"
           class="white--text font-weight-bold"
+          v-if="isMyPost"
         >
           수정하기
         </v-btn>
@@ -85,6 +86,7 @@
 import { mapState } from "vuex";
 
 const boardStore = "boardStore";
+const userStore = "userStore";
 
 export default {
   name: "BoardDetail",
@@ -95,6 +97,10 @@ export default {
   },
   computed: {
     ...mapState(boardStore, ["post"]),
+    ...mapState(userStore, ["user"]),
+    isMyPost() {
+      return this.post.email == this.user.email ? true : false;
+    },
   },
   created() {
     const code = this.$route.params.articleno;
