@@ -10,4 +10,8 @@ async function getAllHouses(dongCode, success, fail) {
   await api.post(`/search`, dongCode).then(success).catch(fail);
 }
 
-export { getBaseAddress, getAllHouses };
+async function getAllHouseDeals(aptCode, success, fail) {
+  await api.get(`/search/${aptCode}`).then(success).catch(fail);
+}
+
+export { getBaseAddress, getAllHouses, getAllHouseDeals };

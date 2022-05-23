@@ -27,3 +27,5 @@ export const SET_DONG_CODE = "SET_DONG_CODE";
 export const SET_DONG_LIST = "SET_DONG_LIST";
 export const SET_HOUSE_LIST = "SET_HOUSE_LIST";
 export const SET_HOUSE = "SET_HOUSE";
+export const SET_HOUSE_DEAL_LIST = "SET_HOUSE_DEAL_LIST";
+export const SET_RECENT_DEALS = "SET_RECENT_DEALS";
