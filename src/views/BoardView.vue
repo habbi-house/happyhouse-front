@@ -19,7 +19,7 @@
           color="primary"
           elevation="0"
           class="white--text font-weight-bold"
-          :to="{ name: 'boardAdd' }"
+          @click="movePage"
         >
           글 작성하기
         </v-btn>
@@ -33,11 +33,21 @@
 
 <script>
 import BoardHeader from "@/components/board/BoardHeader.vue";
+import { mapActions } from "vuex";
+
+const boardStore = "boardStore";
 
 export default {
   name: "BoardView",
   components: {
     BoardHeader,
+  },
+  methods: {
+    ...mapActions(boardStore, ["initPost"]),
+    movePage() {
+      this.initPost();
+      this.$router.push({ name: "boardAdd" });
+    },
   },
 };
 </script>

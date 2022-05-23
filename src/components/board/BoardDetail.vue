@@ -125,9 +125,12 @@ export default {
       this.movePage();
     },
     replyPost() {
-      //vuex로 articleno를 가져가야 함
-      alert("답글이동");
-      this.$router.push({ name: "boardAdd" });
+      this.$router.push({
+        name: "boardAdd",
+        params: {
+          isReply: true,
+        },
+      });
     },
   },
 };

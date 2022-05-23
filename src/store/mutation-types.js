@@ -7,6 +7,7 @@ export const GET_POST = "GET_POST";
 export const CREATE_POST = "CREATE_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
+export const INIT_POST = "INIT_POST";
 
 /* Login Mutation Types */
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
