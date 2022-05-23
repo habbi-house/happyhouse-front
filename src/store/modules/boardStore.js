@@ -1,5 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { getAllPosts, getPost, createPost } from "@/components/api/board";
+import {
+  getAllPosts,
+  getPost,
+  createPost,
+  updatePost,
+} from "@/components/api/board";
 import { GET_POST, SET_BOARD_LIST } from "../mutation-types";
 
 const boardStore = {
@@ -45,6 +50,19 @@ const boardStore = {
     },
     async createPost(_, post) {
       await createPost(
+        post,
+        ({ data, status }) => {
+          if (status === 200) {
+            alert(data);
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+    async updatePost(_, post) {
+      await updatePost(
         post,
         ({ data, status }) => {
           if (status === 200) {
