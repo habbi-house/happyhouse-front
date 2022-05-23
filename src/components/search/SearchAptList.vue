@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import sampleImg from "@/assets/sample.jpg";
 
 const houseStore = "houseStore";
@@ -45,8 +45,10 @@ export default {
   },
   methods: {
     ...mapMutations(houseStore, ["SET_HOUSE"]),
+    ...mapActions(houseStore, ["searchHouseDealByApt"]),
     getHouseDetail(aptCode) {
       this.SET_HOUSE(aptCode);
+      this.searchHouseDealByApt();
       this.$router.push("search/" + aptCode);
     },
   },

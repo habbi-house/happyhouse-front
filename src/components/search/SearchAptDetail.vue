@@ -9,6 +9,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
+      <!-- 아파트 세부 정보 -->
       <v-list-item class="px-4">
         <v-list-item-content>
           <div class="d-flex align-center mt-1 mb-4">
@@ -40,9 +41,17 @@
           </v-simple-table>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item class="px-4">
+      <!-- 아파트 거래 내역 -->
+      <v-list-item>
         <v-list-item-content>
-          <h2 class="mb-4">거래 내역</h2>
+          <h2 class="px-2 mb-4">거래 내역</h2>
+          <apexchart
+            type="line"
+            height="250"
+            :options="chartOptions"
+            :series="series"
+            class="pr-2"
+          ></apexchart>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -52,17 +61,52 @@
 <script>
 import sampleImg from "@/assets/sample.jpg";
 import { mapState } from "vuex";
+import VueApexCharts from "vue-apexcharts";
 
 const houseStore = "houseStore";
 export default {
+  components: {
+    apexchart: VueApexCharts,
+  },
   data() {
     return {
       sampleImg,
       toggleWish: true,
+      series: [{ name: "실거래가", data: [] }],
+      chartOptions: {
+        chart: {
+          type: "line",
+          height: 250,
+        },
+        stroke: {
+          curve: "straight",
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        title: {
+          text: "최근 거래 내역",
+          align: "left",
+        },
+        markers: {
+          hover: {
+            sizeOffset: 4,
+          },
+        },
+        xaxis: {
+          categories: {},
+        },
+      },
     };
   },
   computed: {
-    ...mapState(houseStore, ["house"]),
+    ...mapState(houseStore, ["house", "houseDeals", "recentDeals"]),
+  },
+  created() {
+    this.series[0].data = this.recentDeals.map((x) => x.amount).reverse();
+    this.chartOptions.xaxis.categories = this.recentDeals
+      .map((x) => x.date)
+      .reverse();
   },
   methods: {
     goBack() {

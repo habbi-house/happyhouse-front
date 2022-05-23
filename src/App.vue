@@ -3,7 +3,9 @@
     <app-bar />
     <v-main
       :style="
-        $route.path === '/search' ? 'height: 100vh; max-height: 100%' : ''
+        $route.path.startsWith('/search')
+          ? 'height: 100vh; max-height: 100%'
+          : ''
       "
     >
       <router-view :style="$route.path === '/search' ? 'height: 100%' : ''" />
