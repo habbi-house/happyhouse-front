@@ -53,6 +53,7 @@ export default {
   },
   computed: {
     ...mapState(userStore, ["user"]),
+    ...mapState(boardStore, ["post"]),
     ...mapGetters(userStore, ["isLogin"]),
   },
   methods: {
@@ -61,6 +62,8 @@ export default {
       await this.createPost({
         title: this.title,
         content: this.content,
+        originNo: this.post.originNo,
+        groupLayer: this.post.groupLayer,
         writer: this.user.name,
         email: this.user.email,
       });

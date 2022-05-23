@@ -6,7 +6,7 @@ import {
   updatePost,
   deletePost,
 } from "@/components/api/board";
-import { GET_POST, SET_BOARD_LIST } from "../mutation-types";
+import { GET_POST, SET_BOARD_LIST, INIT_POST } from "../mutation-types";
 
 const boardStore = {
   namespaced: true,
@@ -21,6 +21,20 @@ const boardStore = {
     },
     [GET_POST]: (state, post) => {
       state.post = post;
+    },
+    [INIT_POST]: (state) => {
+      state.post = {
+        code: 0,
+        content: "",
+        email: "",
+        groupLayer: 0,
+        groupOrd: 0,
+        hits: 0,
+        originNo: 0,
+        reg_datetime: "",
+        title: "",
+        writer: "",
+      };
     },
   },
   actions: {
@@ -88,6 +102,9 @@ const boardStore = {
           alert("에러발생 관리자에게 문의하세요.");
         }
       );
+    },
+    initPost({ commit }) {
+      commit(INIT_POST);
     },
   },
 };
