@@ -62,7 +62,7 @@
 
       <div v-else>
         <v-btn
-          @click="deletePost"
+          @click="submitDeletePost"
           elevation="0"
           color="lightgray"
           class="white--text font-weight-bold mr-3"
@@ -70,7 +70,7 @@
           삭제하기
         </v-btn>
         <v-btn
-          @click="updatePost"
+          @click="submitUpdatePost"
           elevation="0"
           color="primary"
           class="white--text font-weight-bold"
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const boardStore = "boardStore";
 const userStore = "userStore";
@@ -107,18 +107,21 @@ export default {
     this.$store.dispatch("boardStore/setBoardDetail", code);
   },
   methods: {
+    ...mapActions(boardStore, ["updatePost", "setBoardList", "deletePost"]),
     movePage() {
       this.$router.push({ name: "board" });
     },
     moveUpdate() {
       this.boardAction = "update";
     },
-    updatePost() {
-      alert("update호출");
+    async submitUpdatePost() {
+      await this.updatePost(this.post);
+      this.setBoardList();
       this.boardAction = "detail";
     },
-    deletePost() {
-      alert("delete호출");
+    async submitDeletePost() {
+      await this.deletePost(this.post.code);
+      this.setBoardList();
       this.movePage();
     },
     replyPost() {

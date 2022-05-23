@@ -14,4 +14,12 @@ async function createPost(post, success, fail) {
   await api.post(`/board/create`, post).then(success).catch(fail);
 }
 
-export { getAllPosts, getPost, createPost };
+async function updatePost(post, success, fail) {
+  await api.post(`/board/update`, post).then(success).catch(fail);
+}
+
+async function deletePost(code, success, fail) {
+  await api.post(`/board/delete`, code).then(success).catch(fail);
+}
+
+export { getAllPosts, getPost, createPost, updatePost, deletePost };
