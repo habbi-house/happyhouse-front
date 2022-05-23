@@ -8,12 +8,21 @@
 <script>
 import SearchAptList from "@/components/search/SearchAptList.vue";
 import SearchAptDetail from "@/components/search/SearchAptDetail.vue";
+import { mapMutations } from "vuex";
+import { CLEAR_HOUSE_LIST } from "@/store/mutation-types";
 
+const houseStore = "houseStore";
 export default {
   name: "SearchResult",
   components: {
     SearchAptList,
     SearchAptDetail,
+  },
+  created() {
+    this.CLEAR_HOUSE_LIST();
+  },
+  methods: {
+    ...mapMutations(houseStore, [CLEAR_HOUSE_LIST]),
   },
 };
 </script>

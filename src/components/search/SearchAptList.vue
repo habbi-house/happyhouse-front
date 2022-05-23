@@ -29,7 +29,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 import sampleImg from "@/assets/sample.jpg";
-import { CLEAR_HOUSE_LIST, SET_HOUSE } from "@/store/mutation-types";
+import { SET_HOUSE } from "@/store/mutation-types";
 
 const houseStore = "houseStore";
 
@@ -40,14 +40,11 @@ export default {
       sampleImg,
     };
   },
-  created() {
-    this.CLEAR_HOUSE_LIST();
-  },
   computed: {
     ...mapState(houseStore, ["houses"]),
   },
   methods: {
-    ...mapMutations(houseStore, [CLEAR_HOUSE_LIST, SET_HOUSE]),
+    ...mapMutations(houseStore, [SET_HOUSE]),
     ...mapActions(houseStore, ["searchHouseDealByApt"]),
     getHouseDetail(aptCode) {
       this.SET_HOUSE(aptCode);

@@ -1,6 +1,6 @@
 <template>
   <v-container class="px-0 pb-0" elevation="0">
-    <v-slide-group v-model="model" class="pt-4" center-active show-arrows>
+    <v-slide-group class="pt-4" center-active show-arrows>
       <v-slide-item
         v-for="(img, idx) in imgs"
         :key="idx"
