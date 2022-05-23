@@ -15,7 +15,6 @@ import {
   SET_HOUSE,
   SET_HOUSE_DEAL_LIST,
   SET_HOUSE_LIST,
-  SET_RECENT_DEALS,
   SET_SIDO,
   SET_SIDO_LIST,
 } from "../mutation-types";
@@ -26,7 +25,6 @@ const houseStore = {
     house: {},
     houses: [],
     houseDeals: [],
-    recentDeals: [],
     address: [],
     sidos: [],
     gungus: [],
@@ -36,7 +34,16 @@ const houseStore = {
     dong: "",
     dongCode: "",
   },
-  getters: {},
+  getters: {
+    recentDeals: (state) => {
+      return state.houseDeals.slice(0, 5).map((x) => {
+        return {
+          amount: x.dealAmount.split(",").join(""),
+          date: x.dealYear + ". " + x.dealMonth,
+        };
+      });
+    },
+  },
   mutations: {
     [SET_ADDRESS]: (state, address) => {
       state.address = address;
@@ -98,14 +105,6 @@ const houseStore = {
     [SET_HOUSE_DEAL_LIST]: (state, houseDeals) => {
       state.houseDeals = houseDeals;
     },
-    [SET_RECENT_DEALS]: (state) => {
-      state.recentDeals = state.houseDeals.slice(0, 5).map((x) => {
-        return {
-          amount: x.dealAmount.split(",").join(""),
-          date: x.dealYear + ". " + x.dealMonth,
-        };
-      });
-    },
   },
   actions: {
     loadAddress({ commit }) {
@@ -140,7 +139,6 @@ const houseStore = {
         ({ data, status }) => {
           if (status === 200) {
             commit(SET_HOUSE_DEAL_LIST, data.reverse());
-            commit(SET_RECENT_DEALS);
           }
         },
         (err) => {
