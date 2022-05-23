@@ -25,6 +25,7 @@ export const SET_GUNGU_LIST = "SET_GUNGU_LIST";
 export const SET_DONG = "SET_DONG";
 export const SET_DONG_CODE = "SET_DONG_CODE";
 export const SET_DONG_LIST = "SET_DONG_LIST";
+export const CLEAR_HOUSE_LIST = "CLEAR_HOUSE_LIST";
 export const SET_HOUSE_LIST = "SET_HOUSE_LIST";
 export const SET_HOUSE = "SET_HOUSE";
 export const SET_HOUSE_DEAL_LIST = "SET_HOUSE_DEAL_LIST";

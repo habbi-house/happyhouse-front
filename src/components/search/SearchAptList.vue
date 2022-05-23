@@ -20,7 +20,6 @@
             </div>
           </v-img>
           <span class="detail">상세 보기</span>
-          <!-- <v-btn color="white" width="100%" elevation="0">상세 보기</v-btn> -->
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -30,6 +29,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 import sampleImg from "@/assets/sample.jpg";
+import { CLEAR_HOUSE_LIST, SET_HOUSE } from "@/store/mutation-types";
 
 const houseStore = "houseStore";
 
@@ -40,11 +40,14 @@ export default {
       sampleImg,
     };
   },
+  created() {
+    this.CLEAR_HOUSE_LIST();
+  },
   computed: {
     ...mapState(houseStore, ["houses"]),
   },
   methods: {
-    ...mapMutations(houseStore, ["SET_HOUSE"]),
+    ...mapMutations(houseStore, [CLEAR_HOUSE_LIST, SET_HOUSE]),
     ...mapActions(houseStore, ["searchHouseDealByApt"]),
     getHouseDetail(aptCode) {
       this.SET_HOUSE(aptCode);

@@ -5,6 +5,7 @@ import {
   getBaseAddress,
 } from "@/components/api/house";
 import {
+  CLEAR_HOUSE_LIST,
   SET_ADDRESS,
   SET_DONG,
   SET_DONG_CODE,
@@ -84,6 +85,9 @@ const houseStore = {
             .filter((x) => x)
         ),
       ].sort();
+    },
+    [CLEAR_HOUSE_LIST]: (state) => {
+      state.houses = [];
     },
     [SET_HOUSE_LIST]: (state, houses) => {
       state.houses = houses;
