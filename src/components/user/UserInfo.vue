@@ -128,7 +128,7 @@ export default {
   },
   computed: {
     ...mapState(userStore, ["user"]),
-    ...mapGetters(userStore, ["isLogin", "isKakao", "no"]),
+    ...mapGetters(userStore, ["isLogin", "isKakao"]),
   },
   created() {
     this.checkLogin();
@@ -144,7 +144,7 @@ export default {
     },
     async deleteUser() {
       if (confirm("정말로 탈퇴하시겠습니까?")) {
-        await this.withdrawUser(this.no);
+        await this.withdrawUser(this.user.no);
       }
       this.$router.push("/");
     },

@@ -40,9 +40,6 @@ const userStore = {
     isKakao(state) {
       return state.user.email && state.user.no == null ? true : false;
     },
-    no(state) {
-      return state.user.no;
-    },
   },
   mutations: {
     SET_ACCESS_TOKEN(state, accessToken) {
