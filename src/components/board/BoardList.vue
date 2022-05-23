@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 const boardStore = "boardStore";
 
@@ -46,7 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(boardStore, ["posts"]),
+    ...mapGetters(boardStore, ["posts"]),
   },
   created() {
     this.setBoardList();

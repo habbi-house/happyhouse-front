@@ -13,6 +13,7 @@
           placeholder="제목으로 검색"
           prepend-inner-icon="mdi-magnify"
           hide-details
+          v-model="search"
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-btn
@@ -33,7 +34,7 @@
 
 <script>
 import BoardHeader from "@/components/board/BoardHeader.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 const boardStore = "boardStore";
 
@@ -42,8 +43,19 @@ export default {
   components: {
     BoardHeader,
   },
+  computed: {
+    ...mapGetters(boardStore, ["getSearch"]),
+    search: {
+      get() {
+        return this.getSearch;
+      },
+      set(newSearch) {
+        this.setSearch(newSearch);
+      },
+    },
+  },
   methods: {
-    ...mapActions(boardStore, ["initPost"]),
+    ...mapActions(boardStore, ["initPost", "setSearch"]),
     movePage() {
       this.initPost();
       this.$router.push({ name: "boardAdd" });

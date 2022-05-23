@@ -13,8 +13,19 @@ const boardStore = {
   state: {
     post: {},
     posts: [],
+    search: "",
   },
-  getters: {},
+  getters: {
+    posts(state) {
+      let temp = state.posts.filter((post) => {
+        return post.title.indexOf(state.search) != -1;
+      });
+      return temp;
+    },
+    getSearch(state) {
+      return state.search;
+    },
+  },
   mutations: {
     [SET_BOARD_LIST]: (state, posts) => {
       state.posts = posts;
@@ -105,6 +116,9 @@ const boardStore = {
     },
     initPost({ commit }) {
       commit(INIT_POST);
+    },
+    setSearch({ state }, newSearch) {
+      state.search = newSearch;
     },
   },
 };
