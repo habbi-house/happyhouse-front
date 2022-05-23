@@ -4,6 +4,7 @@ import {
   getPost,
   createPost,
   updatePost,
+  deletePost,
 } from "@/components/api/board";
 import { GET_POST, SET_BOARD_LIST } from "../mutation-types";
 
@@ -71,6 +72,20 @@ const boardStore = {
         },
         (err) => {
           console.log(err);
+        }
+      );
+    },
+    async deletePost(_, code) {
+      await deletePost(
+        code,
+        ({ data, status }) => {
+          if (status === 200) {
+            alert(data);
+          }
+        },
+        (err) => {
+          console.log(err);
+          alert("에러발생 관리자에게 문의하세요.");
         }
       );
     },

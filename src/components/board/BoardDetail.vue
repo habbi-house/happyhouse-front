@@ -62,7 +62,7 @@
 
       <div v-else>
         <v-btn
-          @click="deletePost"
+          @click="submitDeletePost"
           elevation="0"
           color="lightgray"
           class="white--text font-weight-bold mr-3"
@@ -107,7 +107,7 @@ export default {
     this.$store.dispatch("boardStore/setBoardDetail", code);
   },
   methods: {
-    ...mapActions(boardStore, ["updatePost", "setBoardList"]),
+    ...mapActions(boardStore, ["updatePost", "setBoardList", "deletePost"]),
     movePage() {
       this.$router.push({ name: "board" });
     },
@@ -119,8 +119,9 @@ export default {
       this.setBoardList();
       this.boardAction = "detail";
     },
-    deletePost() {
-      alert("delete호출");
+    async submitDeletePost() {
+      await this.deletePost(this.post.code);
+      this.setBoardList();
       this.movePage();
     },
     replyPost() {
