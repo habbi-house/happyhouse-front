@@ -54,12 +54,24 @@
           ></apexchart>
         </v-list-item-content>
       </v-list-item>
+      <!-- 아파트 매입 버튼 -->
+      <v-list-item class="d-flex justify-center px-4">
+        <v-btn
+          color="primary font-weight-bold"
+          elevation="0"
+          width="100%"
+          @click="buyHouse"
+        >
+          아파트 매입
+        </v-btn>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
 import sampleImg from "@/assets/sample.jpg";
+import { ethers } from "ethers";
 import { mapState } from "vuex";
 import VueApexCharts from "vue-apexcharts";
 
@@ -115,8 +127,61 @@ export default {
     toggle() {
       this.toggleWish = !this.toggleWish;
     },
+    buyHouse() {
+      console.log(ethers);
+      if (typeof window.ethereum !== "undefined") {
+        console.log("MetaMask is installed!");
+        eth_tx();
+      }
+    },
   },
 };
+
+async function eth_tx() {
+  //console.log(web3);
+  const accounts = await window.ethereum.request({
+    method: "eth_requestAccounts",
+  });
+  const account = accounts[0];
+  console.log(account);
+
+  window.ethereum
+    .request({
+      method: "eth_sendTransaction",
+      params: [
+        {
+          from: accounts[0], //매입자
+          to: "0x73d1D32dC7031D36D5B79F6BCA688227ed78166d", //매도자(현재 소유주):변경 요!!!
+          value: "0x29a2241af62c0000", //매입가 3ETH
+          gasPrice: "0x09184e72a000",
+          gas: "0x2710",
+        },
+      ],
+    })
+    .then(async (txHash) => {
+      console.log(txHash);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner();
+      console.log("singer:", signer);
+      const usdc = {
+        address: "0xEAc51f6a93309570D65Ffff171e92bE2950993fC", //스마트 컨트랙트 주소:변경 요!!!
+        abi: [
+          "function buyRealEstate(uint _id, address _buyerAddress, uint _price) public  returns (string)",
+        ],
+      };
+      let userAddress = await signer.getAddress();
+      const usdcContract = new ethers.Contract(usdc.address, usdc.abi, signer);
+      console.log(usdcContract);
+      const tx = await usdcContract.buyRealEstate(101, userAddress, 3);
+      console.log(`buyRealEstate Transaction hash: ${tx.hash}`);
+
+      const result = await tx.wait();
+      console.log(`Transaction confirmed in block ${result.blockNumber}`);
+      alert("거래가 성공되었습니다");
+    })
+    .catch((error) => console.log(error));
+}
 </script>
 
 <style>
