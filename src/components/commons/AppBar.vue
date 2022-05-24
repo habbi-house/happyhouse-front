@@ -29,7 +29,7 @@
     <!-- 우측: 사용자 관련 -->
     <div v-if="isLogin">
       <v-btn
-        @click="logout"
+        @click="submitLogout"
         color="white"
         elevation="0"
         class="no-uppercase mr-4 font-weight-bold gray--text"
@@ -77,9 +77,9 @@ export default {
     ...mapGetters(userStore, ["isLogin"]),
   },
   methods: {
-    ...mapActions(userStore, ["logoutUser"]),
-    logout() {
-      this.logoutUser();
+    ...mapActions(userStore, ["logoutUser", "logout"]),
+    submitLogout() {
+      this.logout();
       location.reload();
     },
   },

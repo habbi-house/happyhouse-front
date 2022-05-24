@@ -18,7 +18,6 @@
 /* eslint-disable */
 import AppBar from "@/components/commons/AppBar.vue";
 import AppFooter from "@/components/commons/AppFooter.vue";
-import vueCookies from "vue-cookies";
 import { mapActions } from "vuex";
 
 const userStore = "userStore";
@@ -30,20 +29,10 @@ export default {
     AppFooter,
   },
   created() {
-    let token = vueCookies.get("token");
-    if (token) {
-      this.setUser(token);
-      let accessToken = vueCookies.get("accessToken");
-      let refreshToken = vueCookies.get("refreshToken");
-      if (accessToken) {
-        this.setToken({ accessToken, refreshToken });
-      } else {
-        this.getUserByNo();
-      }
-    }
+    this.refreshUser();
   },
   methods: {
-    ...mapActions(userStore, ["setToken", "setUser", "getUserByNo"]),
+    ...mapActions(userStore, ["refreshUser"]),
   },
 };
 </script>

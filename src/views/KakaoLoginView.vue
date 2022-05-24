@@ -25,9 +25,9 @@ export default {
       await this.loginKakao(this.code);
       this.$router.push("/");
     },
-    getters: {
-      ...mapGetters(userStore, ["isLogin"]),
-    },
+  },
+  computed: {
+    ...mapGetters(userStore, ["isLogin"]),
   },
 };
 </script>
