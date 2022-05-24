@@ -71,7 +71,6 @@ const userStore = {
       signInKakao(
         code,
         ({ data }) => {
-          console.log(data);
           commit(SET_AXIOS_TOKEN, data);
           let jwt = parseJwt(data);
           commit(SET_USER, {
@@ -154,7 +153,7 @@ const userStore = {
             alert("회원 정보 수정 완료");
           }
         },
-        ({ response }) => {
+        (response) => {
           console.log(response);
         }
       );
@@ -198,9 +197,7 @@ const userStore = {
             }
           }
         },
-        ({ data }) => {
-          console.log(data);
-        }
+        (response) => {}
       );
     },
     logout: async ({ commit }) => {

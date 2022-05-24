@@ -1,6 +1,5 @@
 /* eslint-disable */
 import axios from "axios";
-import vueCookies from "vue-cookies";
 
 const instance = axios.create({
   baseURL: `${process.env.VUE_APP_API_BASE_URL}`,
@@ -8,11 +7,6 @@ const instance = axios.create({
     "Content-type": "application/json",
   },
 });
-const token = vueCookies.get("token");
-
-instance.defaults.headers.common["Authorization"] = token
-  ? `Bearer ${token}`
-  : null;
 
 instance.defaults.withCredentials = true;
 
@@ -21,13 +15,21 @@ instance.interceptors.response.use(
     return response;
   },
 
-  function ({ response }) {
-    console.log(response);
+  async function (error) {
+    const { config, response } = error;
+    const originalRequest = config;
     if (response.data.status === 444) {
-      alert("다시 로그인 해주세요.");
-      location.href = `${process.env.VUE_APP_VUE_BASE_URL}`;
+      const { data } = await instance.get(`/user/refresh`);
+      instance.defaults.headers.common.Authorization = `Bearer ${data}`;
+      originalRequest.headers.Authorization = `Bearer ${data}`;
+      return instance(originalRequest);
+    } else if (response.data.status === 445) {
+      if (originalRequest.url != "/user/refresh") {
+        alert(response.data.message);
+        location.href = `${process.env.VUE_APP_VUE_BASE_URL}/sign-in`;
+      }
     }
-    return Promise.reject(response);
+    return Promise.reject(error);
   }
 );
 

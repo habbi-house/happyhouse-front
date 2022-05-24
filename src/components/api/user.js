@@ -34,6 +34,10 @@ async function logoutUser(success, fail) {
   await api.get(`/user/logout`).then(success).catch(fail);
 }
 
+async function ping(success, fail) {
+  await api.get(`/user/ping`).then(success).catch(fail);
+}
+
 export {
   signUp,
   signIn,
@@ -43,4 +47,5 @@ export {
   getUserByNo,
   refreshUser,
   logoutUser,
+  ping,
 };

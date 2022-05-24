@@ -21,7 +21,6 @@ export default {
     ...mapActions(userStore, ["loginKakao"]),
 
     async getToken() {
-      console.log("getToken");
       await this.loginKakao(this.code);
       this.$router.push("/");
     },
