@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-4 px-4">
+  <v-container class="mt-4 px-4" color="lightBgColor">
     <v-row>
       <v-text-field
         label="제목"

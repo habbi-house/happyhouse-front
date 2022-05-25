@@ -1,7 +1,7 @@
 <template>
-  <v-footer app color="white" class="pa-0" absolute>
+  <v-footer app color="lightBgColor" class="pa-0" absolute>
     <v-container class="pa-0">
-      <v-card flat tile width="100%">
+      <v-card flat tile width="100%" color="lightBgColor">
         <v-card-text class="d-flex mb-3 px-5">
           <div>
             <div class="d-flex align-center mb-4">

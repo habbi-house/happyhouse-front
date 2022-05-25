@@ -3,6 +3,7 @@
 
 export const TOGGLE_CAMERA_MODAL = "TOGGLE_CAMERA_MODAL";
 export const SHOW_MESSAGE = "SHOW_MESSAGE";
+export const TOGGLE_DARK_MODE = "TOGGLE_DARK_MODE";
 
 /* Board Mutation Types */
 export const SET_BOARD_LIST = "SET_BOARD_LIST";

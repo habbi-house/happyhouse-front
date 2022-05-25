@@ -8,6 +8,8 @@ export default new Vuetify({
     options: {},
     themes: {
       light: {
+        bgColor: "white",
+        lightBgColor: "white",
         primary: "#FFB300",
         gray: "#656565",
         // gray: "#A0A0A0",
@@ -15,6 +17,8 @@ export default new Vuetify({
         kakao: "#FFE502",
       },
       dark: {
+        bgColor: "#1E1E1E",
+        lightBgColor: "#242424",
         primary: "#FFB800",
         gray: "#BABABA",
         lightgray: "#F8F8F8",

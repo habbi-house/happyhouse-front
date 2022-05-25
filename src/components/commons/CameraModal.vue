@@ -58,7 +58,11 @@
 
 <script>
 /* eslint-disable prettier/prettier */
-import { SHOW_MESSAGE, TOGGLE_CAMERA_MODAL } from "@/store/mutation-types";
+import {
+  SHOW_MESSAGE,
+  TOGGLE_CAMERA_MODAL,
+  TOGGLE_DARK_MODE,
+} from "@/store/mutation-types";
 import { mapMutations, mapState } from "vuex";
 import { analyzeFace, uploadFile } from "../api/camera";
 
@@ -82,7 +86,7 @@ export default {
     ...mapState(["isOpen"]),
   },
   methods: {
-    ...mapMutations([TOGGLE_CAMERA_MODAL, SHOW_MESSAGE]),
+    ...mapMutations([TOGGLE_CAMERA_MODAL, TOGGLE_DARK_MODE, SHOW_MESSAGE]),
     closeModal() {
       this.flag = false;
       this.TOGGLE_CAMERA_MODAL();
@@ -136,14 +140,14 @@ export default {
       if (emotions) {
         const maxVal = Math.max(...Object.values(emotions));
         if (maxVal === emotions.happiness) {
-          this.$vuetify.theme.dark = false;
+          this.TOGGLE_DARK_MODE();
           this.SHOW_MESSAGE({
             text: "햅피하시군요 :)",
             color: "primary",
             icon: "mdi-robot-happy-outline",
           });
         } else {
-          this.$vuetify.theme.dark = true;
+          this.TOGGLE_DARK_MODE();
           this.SHOW_MESSAGE({
             text: "언햅피하시군요.. :(",
             color: "primary",

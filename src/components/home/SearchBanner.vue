@@ -14,7 +14,12 @@
         </div>
       </v-col>
       <v-spacer></v-spacer>
-      <v-col cols="5"><v-img :src="src" contain class="rounded" /></v-col>
+      <v-col cols="5"
+        ><v-img
+          :src="isDark ? unHappyHouseImg : happyHouseImg"
+          contain
+          class="rounded"
+      /></v-col>
     </v-row>
   </v-container>
 </template>
@@ -23,6 +28,7 @@
 import happyHouseImg from "@/assets/happy-house.jpg";
 import unHappyHouseImg from "@/assets/unhappy-house.png";
 import SearchInput from "@/components/commons/SearchInput.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "SearchBanner",
@@ -31,8 +37,12 @@ export default {
   },
   data() {
     return {
-      src: this.$vuetify.theme.dark ? unHappyHouseImg : happyHouseImg,
+      happyHouseImg,
+      unHappyHouseImg,
     };
+  },
+  computed: {
+    ...mapState(["isDark"]),
   },
 };
 </script>

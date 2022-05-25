@@ -1,6 +1,11 @@
 <template>
   <v-container app class="d-flex pa-7">
-    <v-card class="d-flex-column" width="100%" elevation="0">
+    <v-card
+      class="d-flex-column"
+      width="100%"
+      elevation="0"
+      color="lightBgColor"
+    >
       <!-- BreadCrumb -->
       <v-row>
         <board-header />

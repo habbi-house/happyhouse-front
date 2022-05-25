@@ -1,6 +1,6 @@
 <template>
   <ValidationObserver ref="obs" v-slot="{ invalid, validated, handleSubmit }">
-    <v-card elevation="0">
+    <v-card elevation="0" color="lightBgColor">
       <v-card-title style="font-size: 1.5rem">회원가입</v-card-title>
       <v-card-text>
         <v-form>
@@ -76,13 +76,20 @@
           :disabled="invalid || !validated"
           width="100%"
           elevation="0"
+          class="font-weight-bold"
           >회원가입</v-btn
         >
       </v-card-actions>
       <v-card-text>
         <v-divider></v-divider>
         <br />
-        <v-btn color="kakao" width="100%" elevation="0" @click="kakaoLogin">
+        <v-btn
+          color="kakao"
+          width="100%"
+          elevation="0"
+          @click="kakaoLogin"
+          class="font-weight-bold"
+        >
           카카오로 로그인
         </v-btn>
       </v-card-text>

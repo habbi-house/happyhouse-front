@@ -4,8 +4,9 @@
     <v-main
       :style="
         $route.path.startsWith('/search')
-          ? 'height: 100vh; max-height: 100%'
-          : ''
+          ? `height: 100vh; max-height: 100%; background: ` +
+            (isDark ? '#242424' : 'white')
+          : `background: ` + (isDark ? '#242424' : 'white')
       "
     >
       <router-view :style="$route.path === '/search' ? 'height: 100%' : ''" />
@@ -20,7 +21,7 @@
 import AppBar from "@/components/commons/AppBar.vue";
 import AppFooter from "@/components/commons/AppFooter.vue";
 import SnackBar from "@/components/commons/SnackBar.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const userStore = "userStore";
 
@@ -33,6 +34,9 @@ export default {
   },
   created() {
     this.refreshUser();
+  },
+  computed: {
+    ...mapState(["isDark"]),
   },
   methods: {
     ...mapActions(userStore, ["refreshUser"]),

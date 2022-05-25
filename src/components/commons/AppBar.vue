@@ -1,11 +1,12 @@
 <template>
-  <v-app-bar app color="white" elevation="1" class="px-4">
+  <v-app-bar app color="bgColor" elevation="1" class="px-4">
     <!-- 좌측 -->
     <div class="d-flex align-center">
       <div class="d-flex align-center mr-1">
         <v-app-bar-title class="font-weight-bold">
           <router-link :to="{ name: 'index' }" class="d-flex align-center">
             <v-icon color="gray darken-2">mdi-robot-happy</v-icon>&nbsp;
+            <h4 v-if="this.$vuetify.theme.dark">언</h4>
             햅피하우스
           </router-link>
         </v-app-bar-title>
@@ -29,7 +30,7 @@
     <div v-if="isLogin">
       <v-btn
         @click="submitLogout"
-        color="white"
+        color="bgColor"
         elevation="0"
         class="no-uppercase mr-4 font-weight-bold gray--text"
       >
@@ -42,7 +43,7 @@
     <div v-else>
       <v-btn
         :to="{ name: 'signIn' }"
-        color="white"
+        color="bgColor"
         elevation="0"
         class="no-uppercase mr-4 font-weight-bold gray--text"
       >
