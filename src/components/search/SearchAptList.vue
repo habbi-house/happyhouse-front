@@ -1,6 +1,22 @@
 <template>
   <v-navigation-drawer width="320" permanent>
-    <v-list nav>
+    <v-list nav class="pa-0">
+      <v-list-item class="ma-0">
+        <v-list-item-content class="px-3">
+          <v-list-item-title class="d-flex justify-end">
+            <v-text-field
+              outlined
+              dense
+              hide-details
+              v-model="aptName"
+              placeholder="아파트명으로 검색"
+              :prepend-inner-icon="on ? 'mdi-microphone' : 'mdi-microphone-off'"
+              @click:prepend-inner="() => (on = !on)"
+              @change="searchByAptName"
+            ></v-text-field>
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-list-item
         v-for="(house, index) in houses"
         :key="index"
@@ -8,7 +24,7 @@
         :id="house.aptCode"
         @click="() => getHouseDetail(house.aptCode)"
       >
-        <v-list-item-content class="px-2 py-2">
+        <v-list-item-content class="px-3 pb-2">
           <!-- Img -->
           <v-img :src="sampleImg">
             <div class="pa-3 white--text apart-info">
@@ -38,6 +54,8 @@ export default {
   data() {
     return {
       sampleImg,
+      on: false,
+      aptName: "",
     };
   },
   computed: {
@@ -50,6 +68,9 @@ export default {
       this.SET_HOUSE(aptCode);
       await this.searchHouseDealByApt();
       this.$router.push("search/" + aptCode);
+    },
+    searchByAptName() {
+      this.$store.getters[""];
     },
   },
 };
