@@ -30,9 +30,9 @@ export default new Vuex.Store({
       state.color = color;
       state.icon = icon;
     },
-    [TOGGLE_DARK_MODE]: (state) => {
-      Vuetify.framework.theme.dark = !Vuetify.framework.theme.dark;
-      state.isDark = Vuetify.framework.theme.dark;
+    [TOGGLE_DARK_MODE]: (state, { isDark }) => {
+      Vuetify.framework.theme.dark = isDark;
+      state.isDark = isDark;
     },
   },
 });

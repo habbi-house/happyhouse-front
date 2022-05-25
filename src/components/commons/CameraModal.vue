@@ -81,16 +81,18 @@ export default {
       default: { isDark: false },
     },
   },
-  created() {},
   computed: {
     ...mapState(["isOpen"]),
   },
   methods: {
     ...mapMutations([TOGGLE_CAMERA_MODAL, TOGGLE_DARK_MODE, SHOW_MESSAGE]),
-    closeModal() {
+    clear() {
       this.flag = false;
-      this.TOGGLE_CAMERA_MODAL();
       localMediaStream.getTracks()[0].stop(); // one media track
+    },
+    closeModal() {
+      this.clear();
+      this.TOGGLE_CAMERA_MODAL();
     },
     async startCam() {
       this.flag = true;
@@ -115,11 +117,10 @@ export default {
         }
       );
 
-      let emotions = [];
+      let emotions = {};
       await analyzeFace(
         this.imgUrl,
         (res) => {
-          console.log(res.data[0]);
           if (res.data[0]) {
             emotions = res.data[0].faceAttributes.emotion;
           } else {
@@ -135,25 +136,26 @@ export default {
         }
       );
 
-      this.closeModal();
-
-      if (emotions) {
+      if (Object.keys(emotions).length > 0) {
         const maxVal = Math.max(...Object.values(emotions));
         if (maxVal === emotions.happiness) {
-          this.TOGGLE_DARK_MODE();
+          this.TOGGLE_DARK_MODE({ isDark: false });
           this.SHOW_MESSAGE({
             text: "햅피하시군요 :)",
             color: "primary",
             icon: "mdi-robot-happy-outline",
           });
         } else {
-          this.TOGGLE_DARK_MODE();
+          this.TOGGLE_DARK_MODE({ isDark: true });
           this.SHOW_MESSAGE({
             text: "언햅피하시군요.. :(",
             color: "primary",
             icon: "mdi-robot-dead-outline",
           });
         }
+        this.closeModal();
+      } else {
+        this.clear();
       }
     },
   },
