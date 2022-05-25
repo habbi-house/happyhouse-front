@@ -1,6 +1,8 @@
 // Mutation Types
 // export const MUTATION_TYPE_NAME = "MUTATION_TYPE_NAME";
 
+export const TOGGLE_CAMERA_MODAL = "TOGGLE_CAMERA_MODAL";
+
 /* Board Mutation Types */
 export const SET_BOARD_LIST = "SET_BOARD_LIST";
 export const GET_POST = "GET_POST";

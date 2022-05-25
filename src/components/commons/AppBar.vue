@@ -18,9 +18,8 @@
         <router-link :to="{ name: 'board' }" class="ml-5">
           자유게시판
         </router-link>
-        <!-- <router-link :to="{ name: 'camera' }" class="ml-5">
-            Are You 햅피?
-          </router-link> -->
+        <a @click="toggleModal" class="ml-5"> Are You 햅피? </a>
+        <camera-modal></camera-modal>
       </div>
     </div>
 
@@ -62,11 +61,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import CameraModal from "@/components/commons/CameraModal.vue";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import { TOGGLE_CAMERA_MODAL } from "@/store/mutation-types";
 
 const userStore = "userStore";
 
 export default {
+  components: { CameraModal },
   data() {
     return {
       user: null,
@@ -77,10 +79,14 @@ export default {
     ...mapGetters(userStore, ["isLogin"]),
   },
   methods: {
+    ...mapMutations([TOGGLE_CAMERA_MODAL]),
     ...mapActions(userStore, ["logoutUser", "logout"]),
     submitLogout() {
       this.logout();
       location.reload();
+    },
+    toggleModal() {
+      this.TOGGLE_CAMERA_MODAL();
     },
   },
 };
