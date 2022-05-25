@@ -60,7 +60,7 @@
 /* eslint-disable prettier/prettier */
 import { TOGGLE_CAMERA_MODAL } from "@/store/mutation-types";
 import { mapMutations, mapState } from "vuex";
-import { uploadFile } from "../api/camera";
+import { analyzeFace, uploadFile } from "../api/camera";
 
 let localMediaStream;
 
@@ -104,6 +104,17 @@ export default {
           if (status === 200) {
             this.imgUrl = data;
           }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+
+      await analyzeFace(
+        this.imgUrl,
+        (res) => {
+          console.log(res.status);
+          console.log(res.data);
         },
         (err) => {
           console.log(err);
