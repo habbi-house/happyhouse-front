@@ -11,6 +11,7 @@
       <router-view :style="$route.path === '/search' ? 'height: 100%' : ''" />
     </v-main>
     <app-footer v-if="!$route.path.startsWith('/search')" />
+    <snack-bar></snack-bar>
   </v-app>
 </template>
 
@@ -18,6 +19,7 @@
 /* eslint-disable */
 import AppBar from "@/components/commons/AppBar.vue";
 import AppFooter from "@/components/commons/AppFooter.vue";
+import SnackBar from "@/components/commons/SnackBar.vue";
 import { mapActions } from "vuex";
 
 const userStore = "userStore";
@@ -27,6 +29,7 @@ export default {
   components: {
     AppBar,
     AppFooter,
+    SnackBar,
   },
   created() {
     this.refreshUser();

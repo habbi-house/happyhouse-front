@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { SHOW_MESSAGE } from "@/store/mutation-types";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 
 const userStore = "userStore";
 const boardStore = "boardStore";
@@ -57,6 +58,7 @@ export default {
     ...mapGetters(userStore, ["isLogin"]),
   },
   methods: {
+    ...mapMutations([SHOW_MESSAGE]),
     ...mapActions(boardStore, ["createPost", "setBoardList"]),
     async addPost() {
       await this.createPost({
@@ -72,7 +74,11 @@ export default {
     },
     checkLogin() {
       if (!this.isLogin) {
-        alert("로그인 후에 이용해 주세요.");
+        this.SHOW_MESSAGE({
+          text: "로그인 후 이용해 주세요.",
+          color: "error",
+          icon: "mdi-alert-outline",
+        });
         this.$router.push({ name: "signIn" });
       }
     },

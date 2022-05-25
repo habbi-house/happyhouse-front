@@ -58,7 +58,7 @@
 
 <script>
 /* eslint-disable prettier/prettier */
-import { TOGGLE_CAMERA_MODAL } from "@/store/mutation-types";
+import { SHOW_MESSAGE, TOGGLE_CAMERA_MODAL } from "@/store/mutation-types";
 import { mapMutations, mapState } from "vuex";
 import { analyzeFace, uploadFile } from "../api/camera";
 
@@ -77,11 +77,12 @@ export default {
       default: { isDark: false },
     },
   },
+  created() {},
   computed: {
     ...mapState(["isOpen"]),
   },
   methods: {
-    ...mapMutations([TOGGLE_CAMERA_MODAL]),
+    ...mapMutations([TOGGLE_CAMERA_MODAL, SHOW_MESSAGE]),
     closeModal() {
       this.flag = false;
       this.TOGGLE_CAMERA_MODAL();
@@ -110,16 +111,46 @@ export default {
         }
       );
 
+      let emotions = [];
       await analyzeFace(
         this.imgUrl,
         (res) => {
-          console.log(res.status);
-          console.log(res.data);
+          console.log(res.data[0]);
+          if (res.data[0]) {
+            emotions = res.data[0].faceAttributes.emotion;
+          } else {
+            this.SHOW_MESSAGE({
+              text: "당신의 얼굴을 보여주세요 :)",
+              color: "error",
+              icon: "mdi-alert-outline",
+            });
+          }
         },
         (err) => {
           console.log(err);
         }
       );
+
+      this.closeModal();
+
+      if (emotions) {
+        const maxVal = Math.max(...Object.values(emotions));
+        if (maxVal === emotions.happiness) {
+          this.$vuetify.theme.dark = false;
+          this.SHOW_MESSAGE({
+            text: "햅피하시군요 :)",
+            color: "primary",
+            icon: "mdi-robot-happy-outline",
+          });
+        } else {
+          this.$vuetify.theme.dark = true;
+          this.SHOW_MESSAGE({
+            text: "언햅피하시군요.. :(",
+            color: "primary",
+            icon: "mdi-robot-dead-outline",
+          });
+        }
+      }
     },
   },
 };
