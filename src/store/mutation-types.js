@@ -38,3 +38,4 @@ export const SET_HOUSE = "SET_HOUSE";
 export const SET_HOUSE_DEAL_LIST = "SET_HOUSE_DEAL_LIST";
 export const SET_RECENT_DEALS = "SET_RECENT_DEALS";
 export const SET_HOUSE_INFO = "SET_HOUSE_INFO";
+export const SET_MOVE_FROM = "SET_MOVE_FROM";

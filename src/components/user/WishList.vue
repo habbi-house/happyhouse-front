@@ -6,17 +6,15 @@
     <v-row>
       <v-layout wrap v-if="this.wishlist">
         <v-flex md4 v-for="item in this.wishInfos" :key="item.aptCode">
-          <v-card class="mr-3 my-3">
-            <router-link :to="{ path: `search/${item.aptCode}` }">
-              <v-img :src="item.src">
-                <div class="pa-3 white--text apart-info">
-                  <span class="font-weight-bold">{{ item.apartmentName }}</span>
-                  <br />
-                  <span class="caption">{{ item.address }}</span>
-                </div>
-              </v-img>
-              <span class="detail">상세 정보 보기</span>
-            </router-link>
+          <v-card class="mr-3 my-3" @click="moveToWish(item.aptCode)">
+            <v-img :src="item.src">
+              <div class="pa-3 white--text apart-info">
+                <span class="font-weight-bold">{{ item.apartmentName }}</span>
+                <br />
+                <span class="caption">{{ item.address }}</span>
+              </div>
+            </v-img>
+            <span class="detail">상세 정보 보기</span>
           </v-card>
         </v-flex>
       </v-layout>
@@ -30,13 +28,16 @@
 
 <script>
 import sampleImg from "@/assets/sample.jpg";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 const userStore = "userStore";
+const houseStore = "houseStore";
 
 export default {
   data() {
-    return {};
+    return {
+      ...mapState(houseStore, ["moveFrom"]),
+    };
   },
   computed: {
     ...mapState(userStore, ["user", "wishlist", "wishInfos"]),
@@ -50,7 +51,14 @@ export default {
     });
   },
   methods: {
+    ...mapMutations(houseStore, ["SET_MOVE_FROM"]),
     ...mapActions(userStore, ["updateWishlist", "getWishInfo"]),
+    moveToWish(aptCode) {
+      this.SET_MOVE_FROM("wish");
+      this.$router.push({
+        path: `search/${aptCode}`,
+      });
+    },
   },
 };
 </script>

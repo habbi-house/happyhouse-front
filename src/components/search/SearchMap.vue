@@ -4,7 +4,7 @@
 
 <script>
 /* eslint-disable prettier/prettier */
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 const houseStore = "houseStore";
 const imgSrc =
@@ -17,18 +17,24 @@ export default {
     };
   },
   computed: {
+    ...mapState(houseStore, ["moveFrom"]),
     ...mapState(houseStore, ["sido", "gungu", "dong", "house", "houses"]),
   },
   watch: {
     houses(arr) {
+      console.log("변경");
       // houses 변경 시, 중앙 위치 + 마커 위치 변경
-      const centerLoc = [this.sido, this.gungu, this.dong].join(" ");
+      let centerLoc = [this.sido, this.gungu, this.dong].join(" ");
+      if (this.moveFrom === "wish") {
+        centerLoc = this.house.dong + " " + this.house.jibun;
+        this.SET_MOVE_FROM(null);
+      }
       this.showCenterLocation(centerLoc);
-
+      console.log(centerLoc);
       // 주소명 -> 좌표로 변환 후, 지도 위에 찍기
       arr.forEach((house) => {
         const geocoder = new kakao.maps.services.Geocoder();
-        const addressName = centerLoc + " " + house.jibun;
+        const addressName = house.dong + " " + house.jibun;
 
         const imgSize = new kakao.maps.Size(24, 35);
         const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
@@ -68,6 +74,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(houseStore, ["SET_MOVE_FROM"]),
     ...mapActions(houseStore, ["searchHouseByDong", "setDongCode"]),
     initMap() {
       this.container = document.getElementById("map");
@@ -79,14 +86,21 @@ export default {
 
       this.map = new kakao.maps.Map(this.container, options);
       this.showCenterLocation("서울특별시 강남구 테헤란로 212");
-      this.setDongCode(this.house.dongCode);
-      this.searchHouseByDong();
+      if (this.moveFrom === "wish") {
+        this.setDongCode(this.house.dongCode);
+        this.searchHouseByDong();
+        console.log("맵에서 실행");
+      } else if (this.moveFrom === "home") {
+        this.searchHouseByDong();
+        this.SET_MOVE_FROM(null);
+      }
     },
     showCenterLocation(address) {
       const geocoder = new kakao.maps.services.Geocoder();
       const tempMap = this.map;
       geocoder.addressSearch(address, function (result, status) {
         if (status === kakao.maps.services.Status.OK) {
+          console.log(result);
           const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
           // 결과값으로 받은 위치를 마커로 표시
           const marker = new kakao.maps.Marker({

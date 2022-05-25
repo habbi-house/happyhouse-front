@@ -20,6 +20,7 @@ export default {
   },
   created() {
     if (this.$route.params.from === undefined) {
+      console.log("클리어");
       this.CLEAR_HOUSE_LIST();
     }
   },

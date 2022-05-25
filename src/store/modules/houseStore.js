@@ -22,6 +22,7 @@ import {
   SET_SIDO,
   SET_SIDO_LIST,
   SET_HOUSE_INFO,
+  SET_MOVE_FROM,
 } from "../mutation-types";
 
 const houseStore = {
@@ -39,6 +40,7 @@ const houseStore = {
     gungu: "",
     dong: "",
     dongCode: "",
+    moveFrom: null,
   },
   getters: {},
   mutations: {
@@ -114,6 +116,9 @@ const houseStore = {
       });
       console.log(state.recentDeals);
     },
+    [SET_MOVE_FROM]: (state, from) => {
+      state.moveFrom = from;
+    },
   },
   actions: {
     async loadAddress({ commit }) {
@@ -130,7 +135,6 @@ const houseStore = {
       );
     },
     async searchHouseByDong({ commit, state }) {
-      console.log(state);
       await getAllHouses(
         state.dongCode,
         ({ data, status }) => {

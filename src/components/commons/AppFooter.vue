@@ -15,9 +15,7 @@
               <router-link :to="{ name: 'board' }" class="d-block mb-1">
                 자유 게시판
               </router-link>
-              <router-link :to="{ name: 'camera' }" class="d-block mb-1">
-                Are You 햅피?
-              </router-link>
+              <a @click="toggleModal" class="d-block mb-1"> Are You 햅피? </a>
             </div>
           </div>
           <v-spacer></v-spacer>
@@ -56,7 +54,17 @@
 </template>
 
 <script>
-export default {};
+import { TOGGLE_CAMERA_MODAL } from "@/store/mutation-types";
+import { mapMutations } from "vuex";
+
+export default {
+  methods: {
+    ...mapMutations([TOGGLE_CAMERA_MODAL]),
+    toggleModal() {
+      this.TOGGLE_CAMERA_MODAL();
+    },
+  },
+};
 </script>
 
 <style scoped>
