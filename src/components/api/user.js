@@ -38,6 +38,14 @@ async function ping(success, fail) {
   await api.get(`/user/ping`).then(success).catch(fail);
 }
 
+async function getWishlist(email, success, fail) {
+  await api.post(`/user/wishlist`, email).then(success).catch(fail);
+}
+
+async function getWishInfo(wishlist, success, fail) {
+  await api.post(`/search/wishinfo`, wishlist).then(success).catch(fail);
+}
+
 export {
   signUp,
   signIn,
@@ -48,4 +56,6 @@ export {
   refreshUser,
   logoutUser,
   ping,
+  getWishlist,
+  getWishInfo,
 };

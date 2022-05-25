@@ -3,6 +3,9 @@ import {
   getAllHouseDeals,
   getAllHouses,
   getBaseAddress,
+  addWish,
+  deleteWish,
+  getHouse,
 } from "@/components/api/house";
 import {
   CLEAR_HOUSE_LIST,
@@ -18,6 +21,7 @@ import {
   SET_RECENT_DEALS,
   SET_SIDO,
   SET_SIDO_LIST,
+  SET_HOUSE_INFO,
 } from "../mutation-types";
 
 const houseStore = {
@@ -95,6 +99,9 @@ const houseStore = {
     [SET_HOUSE]: (state, id) => {
       state.house = state.houses.find((house) => house.aptCode === id);
     },
+    [SET_HOUSE_INFO]: (state, house) => {
+      state.house = house;
+    },
     [SET_HOUSE_DEAL_LIST]: (state, houseDeals) => {
       state.houseDeals = houseDeals;
     },
@@ -148,6 +155,46 @@ const houseStore = {
           console.log(err);
         }
       );
+    },
+    async addWish({ state }, email) {
+      await addWish(
+        {
+          aptCode: state.house.aptCode,
+          email: email,
+        },
+        ({ status }) => {
+          if (status === 200) {
+            console.log("찜 성공");
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+    async deleteWish({ state }, email) {
+      await deleteWish(
+        {
+          aptCode: state.house.aptCode,
+          email: email,
+        },
+        ({ status }) => {
+          if (status === 200) {
+            console.log("찜 삭제 성공");
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+    setAptCode({ state }, code) {
+      state.house.aptCode = code;
+    },
+    async setHouseInfo({ state, commit }) {
+      await getHouse(state.house.aptCode, (response) => {
+        commit(SET_HOUSE_INFO, response.data);
+      });
     },
   },
 };

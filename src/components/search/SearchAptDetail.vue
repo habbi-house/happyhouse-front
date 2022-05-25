@@ -72,10 +72,12 @@
 <script>
 import sampleImg from "@/assets/sample.jpg";
 import { ethers } from "ethers";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import VueApexCharts from "vue-apexcharts";
 
 const houseStore = "houseStore";
+const userStore = "userStore";
+
 export default {
   components: {
     apexchart: VueApexCharts,
@@ -83,7 +85,6 @@ export default {
   data() {
     return {
       sampleImg,
-      toggleWish: true,
       series: [{ name: "실거래가", data: [] }],
       chartOptions: {
         chart: {
@@ -111,21 +112,47 @@ export default {
       },
     };
   },
-  created() {
+  async created() {
+    this.setAptCode(this.$route.path.split("/")[2]);
+    await this.setHouseInfo(this.house.aptCode);
+    await this.searchHouseDealByApt();
     this.series[0].data = this.recentDeals.map((x) => x.amount).reverse();
     this.chartOptions.xaxis.categories = this.recentDeals
       .map((x) => x.date)
       .reverse();
   },
   computed: {
+    ...mapState(userStore, ["user", "wishlist"]),
     ...mapState(houseStore, ["house", "houseDeals", "recentDeals"]),
+    toggleWish: function () {
+      console.log(this.wishlist);
+      for (let aptCode of this.wishlist) {
+        if (aptCode === this.house.aptCode) {
+          return false;
+        }
+      }
+      return true;
+    },
   },
   methods: {
+    ...mapActions(userStore, ["updateWishlist"]),
+    ...mapActions(houseStore, [
+      "addWish",
+      "deleteWish",
+      "searchHouseDealByApt",
+      "setAptCode",
+      "setHouseInfo",
+    ]),
     goBack() {
       this.$router.back();
     },
-    toggle() {
-      this.toggleWish = !this.toggleWish;
+    async toggle() {
+      if (this.toggleWish) {
+        await this.addWish(this.user.email);
+      } else {
+        await this.deleteWish(this.user.email);
+      }
+      await this.updateWishlist(this.user.email);
     },
     buyHouse() {
       console.log(ethers);

@@ -30,6 +30,7 @@
           v-slot="{ errors, valid }"
         >
           <v-text-field
+            v-if="!isKakao"
             v-model="user.password"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             :type="show ? 'text' : 'password'"

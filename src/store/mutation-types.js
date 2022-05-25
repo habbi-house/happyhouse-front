@@ -18,6 +18,8 @@ export const SET_USER = "SET_USER";
 export const LOGOUT = "LOGOUT";
 export const SET_AXIOS_TOKEN = "SET_AXIOS_TOKEN";
 export const SET_JWT_TOKEN = "SET_JWT_TOKEN";
+export const SET_WISH_LIST = "SET_WISH_LIST";
+export const SET_WISH_INFO = "SET_WISH_INFO";
 
 /* House Mutation Types */
 export const SET_ADDRESS = "SET_ADDRESS";
@@ -33,3 +35,4 @@ export const SET_HOUSE_LIST = "SET_HOUSE_LIST";
 export const SET_HOUSE = "SET_HOUSE";
 export const SET_HOUSE_DEAL_LIST = "SET_HOUSE_DEAL_LIST";
 export const SET_RECENT_DEALS = "SET_RECENT_DEALS";
+export const SET_HOUSE_INFO = "SET_HOUSE_INFO";

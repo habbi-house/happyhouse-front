@@ -1,11 +1,10 @@
 /* eslint-disable */
-import vueCookies from "vue-cookies";
 import {
-  SET_ACCESS_TOKEN,
-  SET_TOKEN_COOKIES,
   SET_USER,
   LOGOUT,
   SET_AXIOS_TOKEN,
+  SET_WISH_LIST,
+  SET_WISH_INFO,
 } from "@/store/mutation-types.js";
 import { parseJwt } from "@/util/Jwt";
 import { getApiInstance } from "@/components/api/index.js";
@@ -18,6 +17,8 @@ import {
   getUserByNo,
   refreshUser,
   logoutUser,
+  getWishlist,
+  getWishInfo,
 } from "@/components/api/user.js";
 
 const axios = getApiInstance();
@@ -33,6 +34,8 @@ const userStore = {
       email: null,
       phone: null,
     },
+    wishlist: [],
+    wishInfos: [],
   },
   getters: {
     isLogin(state) {
@@ -58,6 +61,12 @@ const userStore = {
     },
     SET_AXIOS_TOKEN(state, token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    },
+    SET_WISH_LIST(state, data) {
+      state.wishlist = data;
+    },
+    SET_WISH_INFO(state, data) {
+      state.wishInfos = data;
     },
   },
   actions: {
@@ -172,7 +181,7 @@ const userStore = {
         }
       );
     },
-    refreshUser: async ({ commit }) => {
+    refreshUser: async ({ commit, state }) => {
       await refreshUser(
         ({ data, status }) => {
           if (status === 200) {
@@ -182,6 +191,9 @@ const userStore = {
                 if (status === 200) {
                   console.log(data);
                   commit(SET_USER, data);
+                  getWishlist(state.user.email, (response) => {
+                    state.wishlist = response.data;
+                  });
                 }
               });
             } else {
@@ -193,6 +205,9 @@ const userStore = {
                 name: jwt.user.name,
                 email: jwt.user.email,
                 phone: null,
+              });
+              getWishlist(state.user.email, (response) => {
+                state.wishlist = response.data;
               });
             }
           }
@@ -209,6 +224,31 @@ const userStore = {
         },
         ({ response }) => {
           console.log(response);
+        }
+      );
+    },
+    updateWishlist: async ({ commit }, email) => {
+      await getWishlist(
+        email,
+        ({ data }) => {
+          commit(SET_WISH_LIST, data);
+        },
+        (response) => {
+          console.log(response);
+        }
+      );
+    },
+    async getWishInfo({ commit }, wishlist) {
+      await getWishInfo(
+        wishlist,
+        ({ data, status }) => {
+          if (status === 200) {
+            console.log(data);
+            commit(SET_WISH_INFO, data);
+          }
+        },
+        (err) => {
+          console.log(err);
         }
       );
     },
