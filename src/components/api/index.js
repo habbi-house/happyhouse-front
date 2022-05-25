@@ -19,10 +19,32 @@ instance.interceptors.response.use(
     const { config, response } = error;
     const originalRequest = config;
     if (response.data.status === 444) {
-      const { data } = await instance.get(`/user/refresh`);
-      instance.defaults.headers.common.Authorization = `Bearer ${data}`;
-      originalRequest.headers.Authorization = `Bearer ${data}`;
-      return instance(originalRequest);
+      await instance.get(`/user/refresh`).then(
+        ({ data }) => {
+          alert(response.data.message);
+          instance.defaults.headers.common.Authorization = `Bearer ${data}`;
+          originalRequest.headers.Authorization = `Bearer ${data}`;
+          return instance(originalRequest).then((response) =>
+            alert(response.status === 200 ? "성공했습니다." : "실패했습니다.")
+          );
+        },
+        ({ response }) => {
+          console.log(response);
+          if (response.status === 418) {
+            alert(response.data);
+            logoutUser(
+              ({ data, status }) => {
+                if (status === 200) {
+                  commit(LOGOUT);
+                }
+              },
+              ({ response }) => {
+                console.log(response);
+              }
+            );
+          }
+        }
+      );
     } else if (response.data.status === 445) {
       if (originalRequest.url != "/user/refresh") {
         alert(response.data.message);

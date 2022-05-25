@@ -197,7 +197,7 @@ const userStore = {
             }
           }
         },
-        (response) => {}
+        ({ response }) => {}
       );
     },
     logout: async ({ commit }) => {
