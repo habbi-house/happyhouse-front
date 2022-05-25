@@ -113,7 +113,7 @@ const userStore = {
           }
         },
         ({ response }) => {
-          alert(response.data);
+          console.log(response);
         }
       );
     },
@@ -212,7 +212,9 @@ const userStore = {
             }
           }
         },
-        ({ response }) => {}
+        ({ response }) => {
+          console.log(response);
+        }
       );
     },
     logout: async ({ commit }) => {

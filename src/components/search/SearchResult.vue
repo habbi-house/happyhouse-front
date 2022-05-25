@@ -19,7 +19,9 @@ export default {
     SearchAptDetail,
   },
   created() {
-    this.CLEAR_HOUSE_LIST();
+    if (this.$route.params.from === undefined) {
+      this.CLEAR_HOUSE_LIST();
+    }
   },
   methods: {
     ...mapMutations(houseStore, [CLEAR_HOUSE_LIST]),

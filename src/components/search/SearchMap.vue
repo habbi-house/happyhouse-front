@@ -4,7 +4,7 @@
 
 <script>
 /* eslint-disable prettier/prettier */
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const houseStore = "houseStore";
 const imgSrc =
@@ -17,7 +17,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["sido", "gungu", "dong", "houses"]),
+    ...mapState(houseStore, ["sido", "gungu", "dong", "house", "houses"]),
   },
   watch: {
     houses(arr) {
@@ -68,6 +68,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(houseStore, ["searchHouseByDong", "setDongCode"]),
     initMap() {
       this.container = document.getElementById("map");
 
@@ -78,6 +79,8 @@ export default {
 
       this.map = new kakao.maps.Map(this.container, options);
       this.showCenterLocation("서울특별시 강남구 테헤란로 212");
+      this.setDongCode(this.house.dongCode);
+      this.searchHouseByDong();
     },
     showCenterLocation(address) {
       const geocoder = new kakao.maps.services.Geocoder();

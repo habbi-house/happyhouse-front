@@ -130,6 +130,7 @@ const houseStore = {
       );
     },
     async searchHouseByDong({ commit, state }) {
+      console.log(state);
       await getAllHouses(
         state.dongCode,
         ({ data, status }) => {
@@ -195,6 +196,9 @@ const houseStore = {
       await getHouse(state.house.aptCode, (response) => {
         commit(SET_HOUSE_INFO, response.data);
       });
+    },
+    setDongCode({ state }, dongCode) {
+      state.dongCode = dongCode;
     },
   },
 };

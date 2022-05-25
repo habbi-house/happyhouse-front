@@ -4,7 +4,7 @@
       <h2>찜 목록</h2>
     </v-row>
     <v-row>
-      <v-layout wrap>
+      <v-layout wrap v-if="this.wishlist">
         <v-flex md4 v-for="item in this.wishInfos" :key="item.aptCode">
           <v-card class="mr-3 my-3">
             <router-link :to="{ path: `search/${item.aptCode}` }">
@@ -19,6 +19,9 @@
             </router-link>
           </v-card>
         </v-flex>
+      </v-layout>
+      <v-layout wrap v-else>
+        <p>찜한 매물이 존재하지 않습니다.</p>
       </v-layout>
     </v-row>
     <div style="display: flex"></div>

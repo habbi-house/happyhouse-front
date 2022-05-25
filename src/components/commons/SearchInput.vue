@@ -47,7 +47,12 @@
           >
         </div>
         <div v-else>
-          <v-btn color="primary" class="mt-3 font-weight-bold" elevation="0">
+          <v-btn
+            color="primary"
+            class="mt-3 font-weight-bold"
+            elevation="0"
+            @click="searchHouse"
+          >
             찾기
           </v-btn>
         </div>
@@ -101,6 +106,9 @@ export default {
     },
     async searchHouse() {
       await this.searchHouseByDong();
+      if (this.$route.path === "/") {
+        this.$router.push({ name: "search", params: { from: "home" } });
+      }
     },
   },
 };

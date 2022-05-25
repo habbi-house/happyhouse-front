@@ -112,10 +112,10 @@ export default {
       },
     };
   },
-  async created() {
+  created() {
     this.setAptCode(this.$route.path.split("/")[2]);
-    await this.setHouseInfo(this.house.aptCode);
-    await this.searchHouseDealByApt();
+    this.setHouseInfo(this.house.aptCode);
+    this.searchHouseDealByApt();
     this.series[0].data = this.recentDeals.map((x) => x.amount).reverse();
     this.chartOptions.xaxis.categories = this.recentDeals
       .map((x) => x.date)
@@ -125,7 +125,6 @@ export default {
     ...mapState(userStore, ["user", "wishlist"]),
     ...mapState(houseStore, ["house", "houseDeals", "recentDeals"]),
     toggleWish: function () {
-      console.log(this.wishlist);
       for (let aptCode of this.wishlist) {
         if (aptCode === this.house.aptCode) {
           return false;
