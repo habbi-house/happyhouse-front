@@ -64,7 +64,7 @@ import {
   TOGGLE_DARK_MODE,
 } from "@/store/mutation-types";
 import { mapMutations, mapState } from "vuex";
-import { analyzeFace, uploadFile } from "../api/camera";
+import { analyzeFace, deleteFile, uploadFile } from "../api/camera";
 
 let localMediaStream;
 
@@ -91,8 +91,10 @@ export default {
       localMediaStream.getTracks()[0].stop(); // one media track
     },
     closeModal() {
-      this.clear();
       this.TOGGLE_CAMERA_MODAL();
+      if (localMediaStream) {
+        this.clear();
+      }
     },
     async startCam() {
       this.flag = true;
@@ -157,6 +159,14 @@ export default {
       } else {
         this.clear();
       }
+
+      await deleteFile(
+        this.imgUrl,
+        () => {},
+        (err) => {
+          console.log(err);
+        }
+      );
     },
   },
 };
