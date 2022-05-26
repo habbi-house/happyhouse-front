@@ -2,7 +2,7 @@
   <v-snackbar
     shaped
     text
-    timeout="3000"
+    timeout="2000"
     right
     top
     :color="color"

@@ -70,10 +70,12 @@
 </template>
 
 <script>
+/* eslint-disable no-unused-vars */
 import sampleImg from "@/assets/sample.jpg";
 import { ethers } from "ethers";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import VueApexCharts from "vue-apexcharts";
+import { SHOW_MESSAGE } from "@/store/mutation-types";
 
 const houseStore = "houseStore";
 const userStore = "userStore";
@@ -134,6 +136,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations([SHOW_MESSAGE]),
     ...mapActions(userStore, ["updateWishlist"]),
     ...mapActions(houseStore, [
       "addWish",
@@ -147,9 +150,21 @@ export default {
     },
     async toggle() {
       if (this.toggleWish) {
-        await this.addWish(this.user.email);
+        await this.addWish(this.user.email).then(({ status, msg }) => {
+          this.SHOW_MESSAGE({
+            text: msg,
+            color: "error",
+            icon: "mdi-heart-multiple",
+          });
+        });
       } else {
-        await this.deleteWish(this.user.email);
+        await this.deleteWish(this.user.email).then(({ status, msg }) => {
+          this.SHOW_MESSAGE({
+            text: msg,
+            color: "gray",
+            icon: "mdi-delete-outline",
+          });
+        });
       }
       await this.updateWishlist(this.user.email);
     },

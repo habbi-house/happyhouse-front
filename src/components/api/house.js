@@ -19,11 +19,11 @@ async function getHouse(aptCode, success, fail) {
 }
 
 async function addWish(wish, success, fail) {
-  await api.post(`/user/addwish`, wish).then(success).catch(fail);
+  return await api.post(`/user/addwish`, wish).then(success).catch(fail);
 }
 
 async function deleteWish(wish, success, fail) {
-  await api.post(`/user/deletewish`, wish).then(success).catch(fail);
+  return await api.post(`/user/deletewish`, wish).then(success).catch(fail);
 }
 
 export {

@@ -174,15 +174,13 @@ const houseStore = {
       );
     },
     async addWish({ state }, email) {
-      await addWish(
+      return await addWish(
         {
           aptCode: state.house.aptCode,
           email: email,
         },
         ({ status }) => {
-          if (status === 200) {
-            console.log("찜 성공");
-          }
+          return { status, msg: "찜 추가" };
         },
         (err) => {
           console.log(err);
@@ -190,15 +188,13 @@ const houseStore = {
       );
     },
     async deleteWish({ state }, email) {
-      await deleteWish(
+      return await deleteWish(
         {
           aptCode: state.house.aptCode,
           email: email,
         },
         ({ status }) => {
-          if (status === 200) {
-            console.log("찜 삭제 성공");
-          }
+          return { status, msg: "찜 추가" };
         },
         (err) => {
           console.log(err);
