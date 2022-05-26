@@ -44,11 +44,13 @@ export default {
   },
   async created() {
     await this.updateWishlist(this.user.email);
-    this.getWishInfo(this.wishlist).then(() => {
-      for (let wishInfo of this.wishInfos) {
-        wishInfo.src = sampleImg;
-      }
-    });
+    if (this.wishlist.length != 0) {
+      this.getWishInfo(this.wishlist).then(() => {
+        for (let wishInfo of this.wishInfos) {
+          wishInfo.src = sampleImg;
+        }
+      });
+    }
   },
   methods: {
     ...mapMutations(houseStore, ["SET_MOVE_FROM"]),
