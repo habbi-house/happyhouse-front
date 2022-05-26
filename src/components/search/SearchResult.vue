@@ -20,7 +20,6 @@ export default {
   },
   created() {
     if (this.moveFrom === null) {
-      console.log("클리어");
       this.CLEAR_HOUSE_LIST();
     }
   },

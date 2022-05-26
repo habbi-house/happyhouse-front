@@ -21,15 +21,15 @@ instance.interceptors.response.use(
     if (response.data.status === 444) {
       await instance.get(`/user/refresh`).then(
         ({ data }) => {
-          alert(response.data.message);
           instance.defaults.headers.common.Authorization = `Bearer ${data}`;
           originalRequest.headers.Authorization = `Bearer ${data}`;
           return instance(originalRequest).then((response) =>
-            alert(response.status === 200 ? "성공했습니다." : "실패했습니다.")
+            console.log(
+              response.status === 200 ? "성공했습니다." : "실패했습니다."
+            )
           );
         },
         async ({ response }) => {
-          console.log(response);
           if (response.status === 418) {
             alert(response.data);
             await logoutUser(

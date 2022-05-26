@@ -103,7 +103,6 @@ const userStore = {
             commit(SET_AXIOS_TOKEN, data);
             getUserByNo(parseJwt(data).user.userNo, ({ data, status }) => {
               if (status === 200) {
-                // console.log(data);
                 commit(SET_USER, data);
               }
             });
@@ -185,7 +184,6 @@ const userStore = {
             if (parseJwt(data).user.userNo) {
               getUserByNo(parseJwt(data).user.userNo, ({ data, status }) => {
                 if (status === 200) {
-                  console.log(data);
                   commit(SET_USER, data);
                   getWishlist(state.user.email, (response) => {
                     state.wishlist = response.data;
@@ -243,7 +241,6 @@ const userStore = {
         wishlist,
         ({ data, status }) => {
           if (status === 200) {
-            console.log(data);
             commit(SET_WISH_INFO, data);
           }
         },

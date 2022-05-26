@@ -86,9 +86,7 @@ export default {
         window.SpeechRecognition || window.webkitSpeechRecognition;
       this.recognition = new window.SpeechRecognition();
       this.recognition.interimResults = true;
-      //console.log(this.recognition);
       this.recognition.addEventListener("result", (e) => {
-        //console.log(e.results[0][0].transcript);
         this.aptName = e.results[0][0].transcript;
       });
     },

@@ -22,7 +22,6 @@ export default {
   },
   watch: {
     houses(arr) {
-      console.log("변경");
       // houses 변경 시, 중앙 위치 + 마커 위치 변경
       let centerLoc = [this.sido, this.gungu, this.dong].join(" ");
       if (this.moveFrom === "wish") {
@@ -30,7 +29,6 @@ export default {
         this.SET_MOVE_FROM(null);
       }
       this.showCenterLocation(centerLoc);
-      console.log(centerLoc);
       // 주소명 -> 좌표로 변환 후, 지도 위에 찍기
       arr.forEach((house) => {
         const geocoder = new kakao.maps.services.Geocoder();
@@ -101,7 +99,6 @@ export default {
       if (this.moveFrom === "wish") {
         this.setDongCode(this.house.dongCode);
         this.searchHouseByDong();
-        console.log("맵에서 실행");
       } else if (this.moveFrom === "home") {
         this.searchHouseByDong();
         this.SET_MOVE_FROM(null);
@@ -112,7 +109,6 @@ export default {
       const tempMap = this.map;
       geocoder.addressSearch(address, function (result, status) {
         if (status === kakao.maps.services.Status.OK) {
-          console.log(result);
           const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
           // 결과값으로 받은 위치를 마커로 표시
           const marker = new kakao.maps.Marker({

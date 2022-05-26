@@ -126,7 +126,6 @@ const houseStore = {
           date: x.dealYear + ". " + x.dealMonth,
         };
       });
-      console.log(state.recentDeals);
     },
     [SET_MOVE_FROM]: (state, from) => {
       state.moveFrom = from;
