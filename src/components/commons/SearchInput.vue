@@ -92,7 +92,11 @@ export default {
       "SET_DONG_LIST",
       "SET_MOVE_FROM",
     ]),
-    ...mapActions(houseStore, ["loadAddress", "searchHouseByDong"]),
+    ...mapActions(houseStore, [
+      "loadAddress",
+      "searchHouseByDong",
+      "setSearchWord",
+    ]),
     getGungus() {
       this.SET_SIDO(this.sido);
       this.SET_GUNGU_LIST();
@@ -106,6 +110,7 @@ export default {
       this.SET_DONG_CODE();
     },
     async searchHouse() {
+      this.setSearchWord("");
       await this.searchHouseByDong();
       if (this.$route.path === "/") {
         this.$router.push({ name: "search" });

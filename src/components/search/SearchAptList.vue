@@ -10,15 +10,14 @@
               hide-details
               v-model="aptName"
               placeholder="아파트명으로 검색"
-              :prepend-inner-icon="on ? 'mdi-microphone' : 'mdi-microphone-off'"
-              @click:prepend-inner="() => (on = !on)"
-              @change="searchByAptName"
+              :append-icon="on ? 'mdi-microphone' : 'mdi-microphone-off'"
+              @click:append="voiceInput"
             ></v-text-field>
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item
-        v-for="(house, index) in houses"
+        v-for="(house, index) in searchedHouses"
         :key="index"
         link
         :id="house.aptCode"
@@ -43,7 +42,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import sampleImg from "@/assets/sample.jpg";
 import { SET_HOUSE } from "@/store/mutation-types";
 
@@ -55,22 +54,51 @@ export default {
     return {
       sampleImg,
       on: false,
-      aptName: "",
+      recognition: {},
     };
   },
   computed: {
     ...mapState(houseStore, ["houses"]),
+    ...mapGetters(houseStore, ["searchWord", "searchedHouses"]),
+
+    aptName: {
+      get() {
+        return this.searchWord;
+      },
+      set(newSearch) {
+        this.setSearchWord(newSearch);
+      },
+    },
+  },
+  created() {
+    this.voiceSearchReady();
   },
   methods: {
     ...mapMutations(houseStore, [SET_HOUSE]),
-    ...mapActions(houseStore, ["searchHouseDealByApt"]),
+    ...mapActions(houseStore, ["searchHouseDealByApt", "setSearchWord"]),
     async getHouseDetail(aptCode) {
       this.SET_HOUSE(aptCode);
       await this.searchHouseDealByApt();
       this.$router.push("search/" + aptCode);
     },
-    searchByAptName() {
-      this.$store.getters[""];
+    voiceSearchReady() {
+      window.SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      this.recognition = new window.SpeechRecognition();
+      this.recognition.interimResults = true;
+      //console.log(this.recognition);
+      this.recognition.addEventListener("result", (e) => {
+        //console.log(e.results[0][0].transcript);
+        this.aptName = e.results[0][0].transcript;
+      });
+    },
+    voiceInput() {
+      this.on = true;
+      setTimeout(() => {
+        this.on = false;
+        this.recognition.stop();
+      }, 5000);
+      this.recognition.start();
     },
   },
 };

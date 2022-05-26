@@ -41,8 +41,18 @@ const houseStore = {
     dong: "",
     dongCode: "",
     moveFrom: null,
+    searchWord: "",
   },
-  getters: {},
+  getters: {
+    searchWord(state) {
+      return state.searchWord;
+    },
+    searchedHouses(state) {
+      return state.houses.filter((house) =>
+        house.apartmentName.includes(state.searchWord)
+      );
+    },
+  },
   mutations: {
     [SET_ADDRESS]: (state, address) => {
       state.address = address;
@@ -203,6 +213,9 @@ const houseStore = {
     },
     setDongCode({ state }, dongCode) {
       state.dongCode = dongCode;
+    },
+    setSearchWord({ state }, newSearch) {
+      state.searchWord = newSearch;
     },
   },
 };

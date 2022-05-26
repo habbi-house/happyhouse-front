@@ -8,7 +8,7 @@
 <script>
 import SearchAptList from "@/components/search/SearchAptList.vue";
 import SearchAptDetail from "@/components/search/SearchAptDetail.vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import { CLEAR_HOUSE_LIST } from "@/store/mutation-types";
 
 const houseStore = "houseStore";
@@ -19,10 +19,13 @@ export default {
     SearchAptDetail,
   },
   created() {
-    if (this.$route.params.from === undefined) {
+    if (this.moveFrom === null) {
       console.log("클리어");
       this.CLEAR_HOUSE_LIST();
     }
+  },
+  computed: {
+    ...mapState(houseStore, ["moveFrom"]),
   },
   methods: {
     ...mapMutations(houseStore, [CLEAR_HOUSE_LIST]),
