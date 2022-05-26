@@ -70,14 +70,11 @@ const userStore = {
     },
   },
   actions: {
-    logoutUser: ({ commit }) => {
-      commit(LOGOUT);
-    },
     setUser: ({ commit }, token) => {
       commit(SET_USER, parseJwt(token).user);
     },
-    loginKakao: ({ commit }, code) => {
-      signInKakao(
+    loginKakao: async ({ commit }, code) => {
+      return await signInKakao(
         code,
         ({ data }) => {
           commit(SET_AXIOS_TOKEN, data);
@@ -90,53 +87,51 @@ const userStore = {
             email: jwt.user.email,
             phone: null,
           });
+          return { status: 200, msg: "카카오로 로그인 성공" };
         },
         (err) => {
           console.log(err);
-          alert("로그인에 실패했습니다.");
+          return { status: 500, msg: "카카오로 로그인 실패" };
         }
       );
     },
     login: async ({ commit }, user) => {
-      await signIn(
+      return await signIn(
         user,
         ({ data, status }) => {
           if (status === 200) {
             commit(SET_AXIOS_TOKEN, data);
             getUserByNo(parseJwt(data).user.userNo, ({ data, status }) => {
               if (status === 200) {
-                console.log(data);
+                // console.log(data);
                 commit(SET_USER, data);
               }
             });
-            console.log("로그인 성공");
+            return { status, msg: "로그인 성공" };
           }
         },
-        ({ response }) => {
-          console.log(response);
+        ({ response: { status, data } }) => {
+          return { status, msg: data };
         }
       );
     },
     signUp: async ({ commit }, user) => {
-      await signUp(
+      return await signUp(
         user,
         ({ data, status }) => {
-          if (status === 200) {
-            alert(data);
-          }
+          return { status, msg: data };
         },
-        ({ response }) => {
-          alert(response.data);
+        ({ response: { status, data } }) => {
+          return { status, msg: data };
         }
       );
     },
     withdrawUser: async ({ commit }, no) => {
-      await withdrawUser(
+      return await withdrawUser(
         no,
-        ({ data, status }) => {
+        async ({ data, status }) => {
           if (status === 200) {
-            alert(data);
-            this.logoutUser(
+            await logoutUser(
               ({ data, status }) => {
                 if (status === 200) {
                   commit(LOGOUT);
@@ -147,28 +142,29 @@ const userStore = {
               }
             );
           }
+          return { status, msg: "탈퇴 성공" };
         },
-        ({ response }) => {
-          alert("에러발생 관리자에게 문의하세요.");
+        ({ response: { status } }) => {
+          return { status, msg: "에러 발생! 관리자에게 문의하세요." };
         }
       );
     },
     updateUser: async ({ commit }, user) => {
-      await updateUser(
+      return await updateUser(
         user,
         ({ data, status }) => {
           if (status === 200) {
             commit(SET_USER, data);
-            alert("회원 정보 수정 완료");
+            return { status, msg: "회원 정보 수정 완료" };
           }
         },
-        (response) => {
+        ({ response: { status, data } }) => {
           console.log(response);
+          return { status, msg: data };
         }
       );
     },
     getUserByNo: async ({ commit }, no) => {
-      console.log(no);
       await getUserByNo(
         no,
         ({ data, status }) => {
@@ -218,14 +214,16 @@ const userStore = {
       );
     },
     logout: async ({ commit }) => {
-      await logoutUser(
+      return await logoutUser(
         ({ data, status }) => {
           if (status === 200) {
             commit(LOGOUT);
           }
+          return { status, msg: "로그아웃 성공" };
         },
-        ({ response }) => {
+        ({ response: { status, data } }) => {
           console.log(response);
+          return { status, msg: data };
         }
       );
     },

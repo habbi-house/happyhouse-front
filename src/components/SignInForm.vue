@@ -69,7 +69,8 @@
 /* eslint-disable */
 
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
+import { SHOW_MESSAGE } from "@/store/mutation-types";
 
 const userStore = "userStore";
 
@@ -86,11 +87,19 @@ export default {
     ValidationObserver,
   },
   methods: {
+    ...mapMutations([SHOW_MESSAGE]),
     ...mapActions(userStore, ["login"]),
     async submit() {
       await this.login({
         email: this.email,
         password: this.pwd,
+      }).then(({ status, msg }) => {
+        this.SHOW_MESSAGE({
+          text: msg,
+          color: status === 200 ? "success" : "error",
+          icon:
+            status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+        });
       });
     },
     kakaoLoginBtn() {

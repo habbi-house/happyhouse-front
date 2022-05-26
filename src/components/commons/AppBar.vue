@@ -4,10 +4,15 @@
     <div class="d-flex align-center">
       <div class="d-flex align-center mr-1">
         <v-app-bar-title class="font-weight-bold">
-          <router-link :to="{ name: 'index' }" class="d-flex align-center">
-            <v-icon color="gray darken-2">mdi-robot-happy</v-icon>&nbsp;
-            <h4 v-if="this.$vuetify.theme.dark">언</h4>
-            햅피하우스
+          <router-link :to="{ name: 'index' }" class="d-flex align-center logo">
+            <span v-if="this.$vuetify.theme.dark" style="width: 148px">
+              <v-icon color="gray darken-2">mdi-robot-dead</v-icon>&nbsp;
+              언햅피하우스
+            </span>
+            <span v-else style="width: 142px">
+              <v-icon color="gray darken-2">mdi-robot-happy</v-icon>&nbsp;
+              햅피하우스
+            </span>
           </router-link>
         </v-app-bar-title>
         &nbsp;&nbsp;
@@ -64,7 +69,7 @@
 <script>
 import CameraModal from "@/components/commons/CameraModal.vue";
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import { TOGGLE_CAMERA_MODAL } from "@/store/mutation-types";
+import { SHOW_MESSAGE, TOGGLE_CAMERA_MODAL } from "@/store/mutation-types";
 
 const userStore = "userStore";
 
@@ -80,11 +85,21 @@ export default {
     ...mapGetters(userStore, ["isLogin"]),
   },
   methods: {
-    ...mapMutations([TOGGLE_CAMERA_MODAL]),
-    ...mapActions(userStore, ["logoutUser", "logout"]),
-    submitLogout() {
-      this.logout();
-      location.reload();
+    ...mapMutations([TOGGLE_CAMERA_MODAL, SHOW_MESSAGE]),
+    ...mapActions(userStore, ["logout"]),
+    async submitLogout() {
+      await this.logout().then(({ status, msg }) => {
+        this.SHOW_MESSAGE({
+          text: msg,
+          color: status === 200 ? "success" : "warning",
+          icon:
+            status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+        });
+      });
+
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
     },
     toggleModal() {
       this.TOGGLE_CAMERA_MODAL();

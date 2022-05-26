@@ -100,7 +100,8 @@
 <script>
 /* eslint-disable prettier/prettier */
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
+import { SHOW_MESSAGE } from "@/store/mutation-types";
 
 const userStore = "userStore";
 
@@ -120,14 +121,25 @@ export default {
     ValidationObserver,
   },
   methods: {
+    ...mapMutations([SHOW_MESSAGE]),
     ...mapActions(userStore, ["signUp"]),
     async submit() {
       await this.signUp({
         email: this.email,
         password: this.pwd,
         name: this.name,
+      }).then(({ status, msg }) => {
+        this.SHOW_MESSAGE({
+          text: msg,
+          color: status === 200 ? "success" : "error",
+          icon:
+            status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+        });
+
+        if (status === 200) {
+          this.$router.push({ name: "signIn" });
+        }
       });
-      this.$router.push({ name: "signIn" });
     },
     kakaoLogin() {
       window.location.replace(

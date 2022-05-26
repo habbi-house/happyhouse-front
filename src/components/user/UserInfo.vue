@@ -23,27 +23,6 @@
             :readonly="true"
           />
         </ValidationProvider>
-        <!-- 비밀번호 -->
-        <ValidationProvider
-          name="pwd"
-          rules="required"
-          v-slot="{ errors, valid }"
-        >
-          <v-text-field
-            v-if="!isKakao"
-            v-model="user.password"
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="show ? 'text' : 'password'"
-            :error-messages="errors"
-            :success="editMode ? valid : false"
-            label="비밀번호"
-            required
-            outlined
-            dense
-            :readonly="!editMode"
-            @click:append="show = !show"
-          />
-        </ValidationProvider>
         <!-- 이름 -->
         <ValidationProvider
           name="pwd"
@@ -65,7 +44,6 @@
       <!-- Button -->
       <div class="d-flex justify-end" v-if="!isKakao">
         <div v-if="!editMode">
-          <!-- TODO: OAuth 로그인 시, 정보 수정 막기 -->
           <v-btn
             @click="changeEdit"
             color="primary"
@@ -77,7 +55,7 @@
           <v-btn
             @click="deleteUser"
             color="lightgray"
-            class="white--text"
+            :class="isDark ? 'black--text' : 'white--text'"
             elevation="0"
           >
             회원탈퇴
@@ -95,7 +73,7 @@
           </v-btn>
           <v-btn
             @click="changeEdit"
-            color="disabled"
+            color="lightgray"
             class="black--text"
             elevation="0"
           >
@@ -111,7 +89,8 @@
 // import profileImg from "@/assets/anonymous.png";
 import profileImg from "@/assets/kkekkuk.png";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { SHOW_MESSAGE } from "@/store/mutation-types";
 
 const userStore = "userStore";
 
@@ -128,6 +107,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(["isDark"]),
     ...mapState(userStore, ["user"]),
     ...mapGetters(userStore, ["isLogin", "isKakao"]),
   },
@@ -135,26 +115,49 @@ export default {
     this.checkLogin();
   },
   methods: {
+    ...mapMutations([SHOW_MESSAGE]),
     ...mapActions(userStore, ["withdrawUser", "updateUser"]),
     changeEdit() {
       this.editMode = !this.editMode;
     },
-    editUser() {
-      this.updateUser(this.user);
+    async editUser() {
+      await this.updateUser(this.user).then(({ status, msg }) => {
+        this.SHOW_MESSAGE({
+          text: msg,
+          color: status === 200 ? "success" : "error",
+          icon:
+            status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+        });
+      });
       this.changeEdit();
     },
     async deleteUser() {
       if (confirm("정말로 탈퇴하시겠습니까?")) {
-        await this.withdrawUser(this.user.no);
+        await this.withdrawUser(this.user.no).then(({ status, msg }) => {
+          this.SHOW_MESSAGE({
+            text: msg,
+            color: status === 200 ? "success" : "error",
+            icon:
+              status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+          });
+          if (status === 200) {
+            this.$router.push("/");
+          }
+        });
       }
-      this.$router.push("/");
     },
     checkLogin() {
       if (!this.isLogin) {
-        alert("로그인 후에 이용해 주세요.");
+        // alert("로그인 후에 이용해 주세요.");
+        this.SHOW_MESSAGE({
+          text: "로그인 후 이용해주세요.",
+          color: "error",
+          icon: "mdi-alert-outline",
+        });
         this.$router.push({ name: "signIn" });
       }
     },
+    // changePassword() {},
   },
 };
 </script>

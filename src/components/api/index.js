@@ -28,11 +28,11 @@ instance.interceptors.response.use(
             alert(response.status === 200 ? "성공했습니다." : "실패했습니다.")
           );
         },
-        ({ response }) => {
+        async ({ response }) => {
           console.log(response);
           if (response.status === 418) {
             alert(response.data);
-            logoutUser(
+            await logoutUser(
               ({ data, status }) => {
                 if (status === 200) {
                   commit(LOGOUT);

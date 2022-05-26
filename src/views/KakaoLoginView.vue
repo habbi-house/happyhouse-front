@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { SHOW_MESSAGE } from "@/store/mutation-types";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 const userStore = "userStore";
 
@@ -18,11 +19,24 @@ export default {
     this.getToken();
   },
   methods: {
+    ...mapMutations([SHOW_MESSAGE]),
     ...mapActions(userStore, ["loginKakao"]),
 
     async getToken() {
-      await this.loginKakao(this.code);
-      this.$router.push("/");
+      await this.loginKakao(this.code).then(({ status, msg }) => {
+        this.SHOW_MESSAGE({
+          text: msg,
+          color: status === 200 ? "success" : "error",
+          icon:
+            status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+        });
+
+        if (status === 200) {
+          this.$router.push("/");
+        } else {
+          this.$router.push("/sign-in");
+        }
+      });
     },
   },
   computed: {
