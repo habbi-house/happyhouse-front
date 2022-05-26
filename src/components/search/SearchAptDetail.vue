@@ -55,7 +55,7 @@
         </v-list-item-content>
       </v-list-item>
       <!-- 아파트 매입 버튼 -->
-      <v-list-item class="d-flex justify-center px-4">
+      <v-list-item class="d-flex justify-center px-4 mb-6">
         <v-btn
           color="primary font-weight-bold"
           elevation="0"
@@ -168,11 +168,18 @@ export default {
       }
       await this.updateWishlist(this.user.email);
     },
-    buyHouse() {
+    async buyHouse() {
       console.log(ethers);
       if (typeof window.ethereum !== "undefined") {
         console.log("MetaMask is installed!");
-        eth_tx();
+        await eth_tx().then(({ status, msg }) => {
+          this.SHOW_MESSAGE({
+            text: msg,
+            color: status === 200 ? "success" : "error",
+            icon:
+              status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+          });
+        });
       }
     },
   },
@@ -186,13 +193,13 @@ async function eth_tx() {
   const account = accounts[0];
   console.log(account);
 
-  window.ethereum
+  return window.ethereum
     .request({
       method: "eth_sendTransaction",
       params: [
         {
           from: accounts[0], //매입자
-          to: "0x73d1D32dC7031D36D5B79F6BCA688227ed78166d", //매도자(현재 소유주):변경 요!!!
+          to: "0x35C2d981c1898737D92C180959D387E4E92B29f1", //매도자(현재 소유주):변경 요!!!
           value: "0x29a2241af62c0000", //매입가 3ETH
           gasPrice: "0x09184e72a000",
           gas: "0x2710",
@@ -206,7 +213,7 @@ async function eth_tx() {
       const signer = provider.getSigner();
       console.log("singer:", signer);
       const usdc = {
-        address: "0xEAc51f6a93309570D65Ffff171e92bE2950993fC", //스마트 컨트랙트 주소:변경 요!!!
+        address: "0x9fc526BD1473049f02857cB41d9997dF4554A424", //스마트 컨트랙트 주소:변경 요!!!
         abi: [
           "function buyRealEstate(uint _id, address _buyerAddress, uint _price) public  returns (string)",
         ],
@@ -219,9 +226,12 @@ async function eth_tx() {
 
       const result = await tx.wait();
       console.log(`Transaction confirmed in block ${result.blockNumber}`);
-      alert("거래가 성공되었습니다");
+      return { status: 200, msg: "거래 성공" };
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      return { status: 500, msg: "거래 실패" };
+    });
 }
 </script>
 
