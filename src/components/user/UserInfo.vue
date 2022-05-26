@@ -82,6 +82,80 @@
         </div>
       </div>
     </ValidationObserver>
+    <h2 class="mt-7 mb-4">비밀번호 변경</h2>
+    <ValidationObserver>
+      <v-form v-if="!isKakao">
+        <!-- 현재 비밀번호
+        <ValidationProvider
+          name="pwd"
+          rules="required"
+          v-slot="{ errors, valid }"
+        >
+          <v-text-field
+            v-model="user.password"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show ? 'text' : 'password'"
+            :error-messages="errors"
+            :success="editMode ? valid : false"
+            label="현재 비밀번호"
+            required
+            outlined
+            dense
+            :readonly="!editMode"
+            @click:append="show = !show"
+          />
+        </ValidationProvider> -->
+        <!-- 새로운 비밀번호 -->
+        <ValidationProvider
+          name="pwd"
+          rules="required"
+          v-slot="{ errors, valid }"
+        >
+          <v-text-field
+            v-model="user.password"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show ? 'text' : 'password'"
+            :error-messages="errors"
+            :success="editMode ? valid : false"
+            label="새로운 비밀번호"
+            required
+            outlined
+            dense
+            :readonly="!editMode"
+            @click:append="show = !show"
+          />
+        </ValidationProvider>
+        <!-- 새로운 비밀번호 -->
+        <ValidationProvider
+          name="pwd"
+          rules="required"
+          v-slot="{ errors, valid }"
+        >
+          <v-text-field
+            v-model="user.password"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :type="show ? 'text' : 'password'"
+            :error-messages="errors"
+            :success="editMode ? valid : false"
+            label="새로운 비밀번호 확인"
+            required
+            outlined
+            dense
+            :readonly="!editMode"
+            @click:append="show = !show"
+          />
+        </ValidationProvider>
+      </v-form>
+      <div class="d-flex justify-end" v-if="!isKakao">
+        <v-btn
+          @click="changePassword"
+          color="primary"
+          class="white--text"
+          elevation="0"
+          >변경하기</v-btn
+        >
+      </div>
+    </ValidationObserver>
   </v-container>
 </template>
 

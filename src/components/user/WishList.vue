@@ -19,16 +19,16 @@
         </v-flex>
       </v-layout>
       <v-layout wrap v-else>
-        <v-flex>
+        <v-flex class="px-3">
           <br />
-          <v-row>
-            <h3>찜한 매물이 없어요.</h3>
+          <v-row class="mb-1">
+            <h3>찜한 매물이 없어요... 😢</h3>
           </v-row>
           <br />
           <v-row>
             <router-link :to="{ name: 'search' }">
-              <h3>매물 구경하러 가기</h3></router-link
-            >
+              <h3>매물 구경하러 가기 ↗</h3>
+            </router-link>
           </v-row>
         </v-flex>
       </v-layout>
