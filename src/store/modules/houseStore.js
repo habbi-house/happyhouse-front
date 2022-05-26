@@ -48,9 +48,11 @@ const houseStore = {
       return state.searchWord;
     },
     searchedHouses(state) {
-      return state.houses.filter((house) =>
+      let res = state.houses.filter((house) =>
         house.apartmentName.includes(state.searchWord)
       );
+      if (res.length == 0) res = null;
+      return res;
     },
   },
   mutations: {

@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer width="320" permanent>
     <v-list nav class="pa-0">
-      <v-list-item class="ma-0">
+      <v-list-item class="ma-0" v-if="houses.length != 0">
         <v-list-item-content class="px-3">
           <v-list-item-title class="d-flex justify-end">
             <v-text-field
