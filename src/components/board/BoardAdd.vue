@@ -68,6 +68,13 @@ export default {
         groupLayer: this.post.groupLayer,
         writer: this.user.name,
         email: this.user.email,
+      }).then(({ status, msg }) => {
+        this.SHOW_MESSAGE({
+          text: msg,
+          color: status === 200 ? "success" : "error",
+          icon:
+            status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+        });
       });
       this.setBoardList();
       this.$router.push({ name: "board" });

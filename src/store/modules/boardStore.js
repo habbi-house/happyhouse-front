@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import {
   getAllPosts,
@@ -75,12 +76,10 @@ const boardStore = {
       );
     },
     async createPost(_, post) {
-      await createPost(
+      return await createPost(
         post,
         ({ data, status }) => {
-          if (status === 200) {
-            alert(data);
-          }
+          return { status, msg: "글 작성 성공" };
         },
         (err) => {
           console.log(err);
@@ -88,12 +87,10 @@ const boardStore = {
       );
     },
     async updatePost(_, post) {
-      await updatePost(
+      return await updatePost(
         post,
         ({ data, status }) => {
-          if (status === 200) {
-            alert(data);
-          }
+          return { status, msg: "글 수정 성공" };
         },
         (err) => {
           console.log(err);
@@ -101,16 +98,13 @@ const boardStore = {
       );
     },
     async deletePost(_, code) {
-      await deletePost(
+      return await deletePost(
         code,
         ({ data, status }) => {
-          if (status === 200) {
-            alert(data);
-          }
+          return { status, msg: "글 삭제 성공" };
         },
         (err) => {
           console.log(err);
-          alert("에러발생 관리자에게 문의하세요.");
         }
       );
     },

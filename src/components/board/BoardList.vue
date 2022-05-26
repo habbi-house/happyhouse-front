@@ -41,7 +41,6 @@ export default {
         { text: "제목", value: "title" },
         { text: "작성자", value: "writer" },
         { text: "작성일", value: "reg_datetime" },
-        { text: "조회수", value: "hits" },
       ],
     };
   },

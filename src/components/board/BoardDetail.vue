@@ -83,7 +83,8 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { SHOW_MESSAGE } from "@/store/mutation-types";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 const boardStore = "boardStore";
 const userStore = "userStore";
@@ -107,6 +108,7 @@ export default {
     this.$store.dispatch("boardStore/setBoardDetail", code);
   },
   methods: {
+    ...mapMutations([SHOW_MESSAGE]),
     ...mapActions(boardStore, ["updatePost", "setBoardList", "deletePost"]),
     movePage() {
       this.$router.push({ name: "board" });
@@ -115,12 +117,26 @@ export default {
       this.boardAction = "update";
     },
     async submitUpdatePost() {
-      await this.updatePost(this.post);
+      await this.updatePost(this.post).then(({ status, msg }) => {
+        this.SHOW_MESSAGE({
+          text: msg,
+          color: status === 200 ? "success" : "error",
+          icon:
+            status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+        });
+      });
       this.setBoardList();
       this.boardAction = "detail";
     },
     async submitDeletePost() {
-      await this.deletePost(this.post.code);
+      await this.deletePost(this.post.code).then(({ status, msg }) => {
+        this.SHOW_MESSAGE({
+          text: msg,
+          color: status === 200 ? "success" : "error",
+          icon:
+            status === 200 ? "mdi-check-circle-outline" : "mdi-alert-outline",
+        });
+      });
       this.setBoardList();
       this.movePage();
     },
