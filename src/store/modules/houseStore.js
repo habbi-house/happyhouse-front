@@ -193,7 +193,7 @@ const houseStore = {
           email: email,
         },
         ({ status }) => {
-          return { status, msg: "찜 추가" };
+          return { status, msg: "찜 삭제" };
         },
         (err) => {
           console.log(err);
