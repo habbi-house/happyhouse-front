@@ -158,8 +158,8 @@ const userStore = {
             return { status, msg: "회원 정보 수정 완료" };
           }
         },
-        ({ response: { status, data } }) => {
-          console.log(response);
+        ({ status, data }) => {
+          console.log(data);
           return { status, msg: data };
         }
       );

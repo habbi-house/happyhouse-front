@@ -68,6 +68,18 @@ export default {
               "mouseout",
               this.makeOutListener(infoWindow)
             );
+
+            kakao.maps.event.addListener(marker, "onmouseover", () => {
+              this.displayInfoWindow(marker);
+            });
+
+            // 클릭 시 상세 보기로 이동
+            kakao.maps.event.addListener(marker, "click", () => {
+              this.$router.push({
+                name: "aptDetail",
+                params: { id: house.aptCode },
+              });
+            });
           }
         });
       });
